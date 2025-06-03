@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-netflix {
+  @apply mt-1 h-14 block w-full ring-1 ring-netflix-gray px-3 py-2 rounded-md shadow-sm bg-netflix-blackWithOpacity text-netflix-gray50;
+}
+
+.input-netflix:focus {
+  @apply  border border-netflix-gray bg-netflix-blackWithOpacity;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #BCBCBC;
+  transition: background-color 5000s ease-in-out 0s;
+  
+}
