@@ -68,12 +68,7 @@ const handleLogin = () => {
             {{ errors.password }}
           </p>
         </div>
-        <button
-          @click="handleLogin"
-          class="w-full py-2 px-4 bg-netflix-red text-white font-semibold rounded-md hover:bg-netflix-redHover focus:bg-netflix-redDark transition duration-150 ease-in-out"
-        >
-          Ingresar
-        </button>
+        <button @click="handleLogin" class="button-netflix">Ingresar</button>
       </form>
       <router-link to="/reset-password" class="text-white hover:underline">
         <p class="mt-4 text-center text-sm text-white">

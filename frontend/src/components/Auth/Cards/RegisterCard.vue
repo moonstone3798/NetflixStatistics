@@ -100,12 +100,7 @@ const handleLogin = () => {
             >Registrarse Como Administrador</label
           >
         </div>
-        <button
-          @click="handleLogin"
-          class="w-full py-2 px-4 bg-netflix-red text-white font-semibold rounded-md hover:bg-netflix-redHover focus:bg-netflix-redDark transition duration-150 ease-in-out"
-        >
-          Crear
-        </button>
+        <button @click="handleLogin" class="button-netflix">Crear</button>
       </form>
     </template></Card
   >

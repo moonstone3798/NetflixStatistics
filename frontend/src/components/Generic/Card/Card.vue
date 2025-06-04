@@ -20,7 +20,7 @@ onMounted(() => {
     >
       <div
         v-if="showTransition"
-        class="w-full md:max-w-md max-w-80 flex justify-center md:px-16 px-4 md:py-12 py-6 bg-netflix-blackWithOpacity rounded-[4px] shadow-md"
+        class="w-full z-20 md:max-w-md max-w-80 flex justify-center md:px-16 px-4 md:py-12 py-6 bg-netflix-blackWithOpacity rounded-[4px] shadow-md"
       >
         <div class="md:max-w-80 max-w-60 w-full">
           <h1 class="text-2xl text-white font-medium leading-10 mb-6">

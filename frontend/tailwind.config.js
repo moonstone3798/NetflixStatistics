@@ -6,6 +6,7 @@ export default {
       backgroundImage: {
         "login-img": "url('/img/LoginImg.png')",
         "register-img": "url('/img/RegisterImg.png')",
+        "home-img": "url('/img/HomeImg.png')",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
@@ -15,7 +16,7 @@ export default {
           red: "#E50914",
           redHover: "#EB3942",
           redDark: "#C11119",
-          blackWithOpacity: "rgba(0, 0, 0, 0.7)",
+          blackWithOpacity: "rgba(0, 0, 0, 0.65)",
           gray: "#808080",
           gray50: "#BCBCBC",
           gray100: "#BDBCBB",
