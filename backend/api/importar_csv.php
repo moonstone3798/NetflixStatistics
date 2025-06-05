@@ -1,98 +1,56 @@
 <?php
-$pdo = new PDO("mysql:host=localhost;dbname=netflix_statistics", "root", "", [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-]);
 
-if ($_FILES['csv_file']['error'] === UPLOAD_ERR_OK) {
-    $file = fopen($_FILES['csv_file']['tmp_name'], 'r');
-    $headers = fgetcsv($file); // Saltar encabezado
+// Validar la carga del archivo
+if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
 
-    while (($row = fgetcsv($file)) !== false) {
-        // Asumiendo que las columnas son (ajustar según tus archivos reales)
-        [$title, $release_year, $duration, $description, $language, $directors, $cast, $genres, $country, $popularity, $votes, $rating, $vote_average, $budget, $revenue] = $row;
+    // Obtener la ruta del archivo
+    $ruta_archivo = $_FILES['csv_file']['tmp_name'];
 
-        // 1. Insertar idioma (o buscar si ya existe)
-        $stmt = $pdo->prepare("SELECT id_idioma FROM idiomas WHERE idioma = ?");
-        $stmt->execute([$language]);
-        $id_idioma = $stmt->fetchColumn();
-        if (!$id_idioma) {
-            $pdo->prepare("INSERT INTO idiomas (idioma) VALUES (?)")->execute([$language]);
-            $id_idioma = $pdo->lastInsertId();
-        }
+    // Abrir el archivo
+    $archivo = fopen($ruta_archivo, 'r');
 
-        // 2. Insertar datos extras
-        $pdo->prepare("INSERT INTO datos_extras (popularidad, votos, rating, promedio_votos, presupuesto, ganancia)
-                       VALUES (?, ?, ?, ?, ?, ?)")
-            ->execute([$popularity, $votes, $rating, $vote_average, $budget, $revenue]);
-        $id_datos_extras = $pdo->lastInsertId();
+    // Obtener los datos del CSV
+    $datos = array();
+    while (($fila = fgetcsv($archivo, 1000, ',')) !== FALSE) {
+        $datos[] = $fila;
+    }
 
-        // 3. Insertar producción (usamos tipo 1 = película, 2 = serie)
-        $tipo = strpos(strtolower($_FILES['csv_file']['name']), 'movie') !== false ? 1 : 2;
-        $pdo->prepare("INSERT INTO producciones (titulo, fecha_ingreso, anio_realizacion, duracion, descripcion, id_idioma, id_actor, id_datos_extras, id_tipo)
-                       VALUES (?, NOW(), ?, ?, ?, ?, 1, ?, ?)")
-            ->execute([$title, $release_year, $duration, $description, $id_idioma, $id_datos_extras, $tipo]);
-        $id_produccion = $pdo->lastInsertId();
+    // Cerrar el archivo
+    fclose($archivo);
 
-        // 4. Insertar país (similar a idioma, simplificado para un solo país)
-        if ($country) {
-            $stmt = $pdo->prepare("SELECT id_pais FROM paises WHERE nombre = ?");
-            $stmt->execute([$country]);
-            $id_pais = $stmt->fetchColumn();
-            if (!$id_pais) {
-                $pdo->prepare("INSERT INTO paises (nombre) VALUES (?)")->execute([$country]);
-                $id_pais = $pdo->lastInsertId();
-            }
-            $pdo->prepare("INSERT INTO producciones_paises (id_pais, id_produccion) VALUES (?, ?)")->execute([$id_pais, $id_produccion]);
-        }
+    // Preparar la consulta SQL
+    foreach ($datos as $fila) {
+        $show_id = mysqli_real_escape_string($cnx, $fila['show_id']);
+        $type = mysqli_real_escape_string($cnx, $fila['type']);
+        $title = mysqli_real_escape_string($cnx, $fila['title']);
+        $director = mysqli_real_escape_string($cnx, $fila['title']); // es una lista
+        $cast = mysqli_real_escape_string($cnx, $fila['cast']); // es una lista
+        $country = mysqli_real_escape_string($cnx, $fila['country']); // es una lista
+        $date_added = mysqli_real_escape_string($cnx, $fila['date_added']);
+        $release_year = mysqli_real_escape_string($cnx, $fila['release_year']);
+        $rating = mysqli_real_escape_string($cnx, $fila['rating']);
+        $duration
+        $genres
+        $language
+        $description
+        
 
-        // 5. Géneros (pueden ser múltiples separados por coma)
-        foreach (explode(',', $genres) as $genero) {
-            $genero = trim($genero);
-            if ($genero) {
-                $stmt = $pdo->prepare("SELECT id_genero FROM generos WHERE nombre = ?");
-                $stmt->execute([$genero]);
-                $id_genero = $stmt->fetchColumn();
-                if (!$id_genero) {
-                    $pdo->prepare("INSERT INTO generos (nombre) VALUES (?)")->execute([$genero]);
-                    $id_genero = $pdo->lastInsertId();
-                }
-                $pdo->prepare("INSERT INTO generos_producciones (id_genero, id_produccion) VALUES (?, ?)")->execute([$id_genero, $id_produccion]);
-            }
-        }
+        // Insertar datos en la base de datos
+        $sql = "INSERT INTO usuarios (nombre, apellido, correo) VALUES ('$nombre', '$apellido', '$correo')";
 
-        // 6. Reparto
-        foreach (explode(',', $cast) as $actor) {
-            $actor = trim($actor);
-            if ($actor) {
-                $stmt = $pdo->prepare("SELECT id_reparto FROM repartos WHERE nombre = ?");
-                $stmt->execute([$actor]);
-                $id_actor = $stmt->fetchColumn();
-                if (!$id_actor) {
-                    $pdo->prepare("INSERT INTO repartos (nombre) VALUES (?)")->execute([$actor]);
-                    $id_actor = $pdo->lastInsertId();
-                }
-                $pdo->prepare("INSERT INTO repartos_producciones (id_reparto, id_produccion) VALUES (?, ?)")->execute([$id_actor, $id_produccion]);
-            }
-        }
-
-        // 7. Directores
-        foreach (explode(',', $directors) as $dir) {
-            $dir = trim($dir);
-            if ($dir) {
-                $stmt = $pdo->prepare("SELECT id_director FROM directores WHERE nombre = ?");
-                $stmt->execute([$dir]);
-                $id_dir = $stmt->fetchColumn();
-                if (!$id_dir) {
-                    $pdo->prepare("INSERT INTO directores (nombre) VALUES (?)")->execute([$dir]);
-                    $id_dir = $pdo->lastInsertId();
-                }
-                $pdo->prepare("INSERT INTO directores_producciones (id_director, id_produccion) VALUES (?, ?)")->execute([$id_dir, $id_produccion]);
-            }
+        // Ejecutar la consulta
+        if (mysqli_query($conexion, $sql)) {
+            echo "Datos insertados correctamente.";
+        } else {
+            echo "Error al insertar datos: " . mysqli_error($conexion);
         }
     }
 
-    fclose($file);
-    echo "✅ Datos cargados correctamente.";
+    // Cerrar la conexión
+    mysqli_close($conexion);
+
 } else {
-    echo "❌ Error al subir el archivo.";
+    echo "Error al subir el archivo.";
 }
+
+?>

@@ -1,16 +1,15 @@
 <?php
-$email = $_POST["email"];
-$password = $_POST["password"];
+require './config/conexion.php';
 
-$sql = "SELECT * FROM usuarios WHERE mail = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
+$mail = $_POST["mail"];
+$constraenia = $_POST["constraenia"];
 
-if ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
-    if (password_verify($password, $row["contrasena"])) {
+$sql = "SELECT * FROM usuarios WHERE mail = $mail";
+$res = mysqli_query($cnx, $sql);
+
+if (mysqli_num_rows($res) == 1) {
+    $row = mysqli_fetch_array($res);
+    if (password_verify($constraenia, $row["constraenia"])) {
         // Inicio de sesión exitoso
         $response = array("status" => "success", "message" => "Inicio de sesión exitoso");
         echo json_encode($response);
@@ -25,6 +24,5 @@ if ($result->num_rows == 1) {
     echo json_encode($response);
 }
 
-$stmt->close();
-$conn->close();
+mysqli_close($cnx)
 ?>
