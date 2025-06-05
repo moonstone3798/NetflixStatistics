@@ -1,8 +1,6 @@
 <script setup>
-import Card from "@/components/cards/Card.vue";
+import LoginCard from "@/components/Auth/Cards/LoginCard.vue";
 </script>
 <template>
-  <div class="w-full h-screen bg-login-img relative bg-cover">
-    <Card class="relative z-10" />
-  </div>
+  <LoginCard class="relative z-10" />
 </template>
