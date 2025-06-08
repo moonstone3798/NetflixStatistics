@@ -4,11 +4,10 @@ $username = "root";
 $password = "";
 $dbname = "netflix_statistics";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$cnx = mysqli_connect($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+if (mysqli_connect_errno()) {
+  echo "Conexión fallida: " . mysqli_connect_error();
+  exit();
 }
-// Cierra la conexión cuando hayas terminado
-//$conn->close();
 ?>
