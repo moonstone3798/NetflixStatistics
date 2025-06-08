@@ -29,7 +29,7 @@ const redirectToLogin = () => {
           <router-link to="/dashboard">Home</router-link>
         </li>
         <li>
-          <router-link to="/myStatistics">Mis Gráficos</router-link>
+          <router-link to="/myGraphics">Mis Gráficos</router-link>
         </li>
         <li>
           <router-link to="/aboutUs">Nosotros</router-link>

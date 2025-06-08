@@ -3,7 +3,13 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
 import Card from "@/components/Generic/Card/Card.vue";
-const { passwordValidations, emailValidations } = useUser();
+const {
+  passwordValidations,
+  emailValidations,
+  repeatPasswordValidations,
+  nameValidations,
+  lastNameValidations,
+} = useUser();
 const router = useRouter();
 const form = reactive({
   email: null,
@@ -53,22 +59,29 @@ const validateData = () => {
     v.condition(form.password)
   )?.message;
   errors.email = emailValidations.find((v) => v.condition(form.email))?.message;
-  if (errors.email || errors.password) {
+  errors.repeatPassword = repeatPasswordValidations.find((v) =>
+    v.condition(form.password, form.repeatPassword)
+  )?.message;
+  errors.name = nameValidations.find((v) => v.condition(form.name))?.message;
+  errors.lastName = lastNameValidations.find((v) =>
+    v.condition(form.lastName)
+  )?.message;
+  if (
+    errors.email ||
+    errors.password ||
+    errors.repeatPassword ||
+    errors.name ||
+    errors.lastName
+  ) {
     return true;
   }
+  return false;
 };
 const handleLogin = () => {
   if (validateData()) {
     return;
   }
-  router.push({
-    name: "Home",
-    params: {
-      email: form.email,
-      password: form.password,
-      isAdmin: form.isAdmin,
-    },
-  });
+  router.push("/aboutUs");
 };
 </script>
 <template>
@@ -101,6 +114,12 @@ const handleLogin = () => {
           >
         </div>
         <button @click="handleLogin" class="button-netflix">Crear</button>
+        <div class="flex items-center gap-x-1 mt-4 text-white">
+          <p class="font-normal">¿Tenes una cuenta?</p>
+          <router-link to="/login" class="hover:underline font-medium"
+            >Inicia sesión</router-link
+          >
+        </div>
       </form>
     </template></Card
   >
