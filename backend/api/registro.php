@@ -28,7 +28,7 @@ if (mysqli_num_rows($res) == 1) {
     
 } else {
     // puede crear el usuario 
-    $insert = "INSERT INTO usuario 
+    $insert = "INSERT INTO usuarios 
     SET nombre = $nombre,
     apellido = $apellido,
     email = $email,
