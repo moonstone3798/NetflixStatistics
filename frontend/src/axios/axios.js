@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost/NetflixStatistics/backend/api/",
+  baseURL: "http://localhost/netflix/NetflixStatistics/backend/api/",
   headers: {
     "Content-Type": "application/json",
   },
