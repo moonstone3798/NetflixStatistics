@@ -23,9 +23,10 @@ $nombre = $data["nombre"];
 $apellido = $data["apellido"];
 $mail = $data["mail"];
 $constraenia = $data["constraenia"];
+$hashedPassword = password_hash($constraenia, PASSWORD_DEFAULT);
 $avatar = null;
 
-$sql = "SELECT * FROM usuarios WHERE mail = '".mysqli_real_escape_string($cnx, $email)."' ";
+$sql = "SELECT * FROM usuarios WHERE mail = '".mysqli_real_escape_string($cnx, $mail)."' ";
 $res = mysqli_query($cnx,$sql);
 
 if (mysqli_num_rows($res) == 1) {
@@ -38,8 +39,8 @@ if (mysqli_num_rows($res) == 1) {
     $insert = "INSERT INTO usuarios 
     SET nombre = '".mysqli_real_escape_string($cnx, $nombre)."',
     apellido = '".mysqli_real_escape_string($cnx, $apellido)."',
-    email = '".mysqli_real_escape_string($cnx, $email)."',
-    constraenia = '".mysqli_real_escape_string($cnx, $constraenia)."',
+    mail = '".mysqli_real_escape_string($cnx, $mail)."',
+    constraenia = '".mysqli_real_escape_string($cnx, $hashedPassword)."',
     is_admin = 0,
     avatar = $avatar";
     mysqli_query($cnx,$insert);
