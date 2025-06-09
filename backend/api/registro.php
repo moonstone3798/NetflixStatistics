@@ -1,11 +1,13 @@
 <?php
 require '../config/conexion.php';
 
+// Configurar CORS correctamente
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Max-Age: 86400"); // 1 día
 
+// Si es preflight, respondemos sin más
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -40,7 +42,7 @@ try {
     }
 
     // Insertar nuevo usuario
-    $insert = "INSERT INTO usuarios (nombre, apellido, mail, constraenia, is_admin, avatar)
+    $insert = "INSERT INTO usuarios (nombre, apellido, mail, contrasenia, is_admin, avatar)
                VALUES ('$nombre', '$apellido', '$mail', '$hashedPassword', 0, NULL)";
     
     mysqli_query($cnx, $insert);
