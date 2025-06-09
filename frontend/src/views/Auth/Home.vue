@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import ChevronIcon from "../../../public/Icon/ChevronIcon.vue";
+</script>
 <template>
   <div class="md:max-w-[61%] w-full">
     <h1 class="text-white font-bold text-5xl leading-[62px] mb-4 text-center">
@@ -20,8 +22,11 @@
           class="input-netflix"
           placeholder="Dirección de Email"
         />
-        <button class="button-netflix md:max-w-[35%]">
-          <span>Crear Cuenta</span>
+        <button
+          class="button-netflix md:max-w-[37%] flex items-center justify-center gap-x-4 h-14 mt-1 px-2"
+        >
+          <span class="text-2xl">Crear Cuenta</span>
+          <ChevronIcon />
         </button>
       </div>
     </div>

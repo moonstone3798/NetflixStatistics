@@ -70,7 +70,7 @@ const handleLogin = () => {
         </div>
         <button @click="handleLogin" class="button-netflix">Ingresar</button>
       </form>
-      <router-link to="/reset-password" class="text-white hover:underline">
+      <router-link to="/resetPassword" class="text-white hover:underline">
         <p class="mt-4 text-center text-sm text-white">
           ¿Olvidaste tu Contraseña?
         </p>

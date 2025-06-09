@@ -7,6 +7,7 @@ export default {
         "login-img": "url('/img/LoginImg.png')",
         "register-img": "url('/img/RegisterImg.png')",
         "home-img": "url('/img/HomeImg.png')",
+        "reset-password-img": "url('/img/ResetPasswordImg.png')",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
