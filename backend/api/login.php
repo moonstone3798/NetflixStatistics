@@ -1,46 +1,41 @@
 <?php
 require '../config/conexion.php';
 
-$data = json_decode(file_get_contents("php://input"), true);
-
-// Permitir CORS
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json; charset=UTF-8");
 
-// Manejo del preflight (solicitud OPTIONS)
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
 }
 
-if (!isset($data["mail"]) || !isset($data["constraenia"])) {
+// Leer JSON desde el body
+$input = json_decode(file_get_contents("php://input"), true);
+
+// Validar campos
+if (!isset($input["mail"]) || !isset($input["constraenia"])) {
     echo json_encode(["status" => "error", "message" => "Datos incompletos"]);
     exit;
 }
 
-$mail = $data["mail"];
-$constraenia = $data["constraenia"];
+$mail = $input["mail"];
+$constraenia = $input["constraenia"];
 
-$sql = "SELECT * FROM usuarios WHERE mail = '".mysqli_real_escape_string($cnx, $mail)."' ";
+$sql = "SELECT * FROM usuarios WHERE mail = '" . mysqli_real_escape_string($cnx, $mail) . "'";
 $res = mysqli_query($cnx, $sql);
 
-if (mysqli_num_rows($res) == 1) {
-    $row = mysqli_fetch_array($res);
-    //if (password_verify($constraenia, $row["constraenia"])) {
-    if ($constraenia === $row["constraenia"]) {
-        // Inicio de sesión exitoso
-        $response = array("status" => "success", "message" => "Inicio de sesión exitoso");
-        echo json_encode($response);
+if (mysqli_num_rows($res) === 1) {
+    $row = mysqli_fetch_assoc($res);
+
+    // Comparar contraseña ingresada con la hasheada en la base de datos
+    if (password_verify($constraenia, $row["constraenia"])) {
+        echo json_encode(["status" => "success", "message" => "Inicio de sesión exitoso"]);
     } else {
-        // Contraseña incorrecta
-        $response = array("status" => "error", "message" => "Contraseña incorrecta");
-        echo json_encode($response);
+        echo json_encode(["status" => "error", "message" => "Contraseña incorrecta"]);
     }
 } else {
-    // Usuario no encontrado
-    $response = array("status" => "error", "message" => "Usuario no encontrado");
-    echo json_encode($response);
+    echo json_encode(["status" => "error", "message" => "Usuario no encontrado"]);
 }
 
 mysqli_close($cnx);
