@@ -1,6 +1,8 @@
 <?php
 require './config/conexion.php';
 
+$data = json_decode(file_get_contents("php://input"), true);
+
 // Permitir CORS
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
