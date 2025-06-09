@@ -89,10 +89,9 @@ const handleLogin = async () => {
     password: form.password,
   });
   if (response.status === "success") {
-    alert("Entro");
     router.push("/aboutUs");
   } else {
-    alert("No entro");
+    alert("No se ha podido registrar el usuario");
   }
 };
 </script>
