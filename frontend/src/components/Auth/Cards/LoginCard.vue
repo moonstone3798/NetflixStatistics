@@ -3,6 +3,7 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
 import Card from "@/components/Generic/Card/Card.vue";
+import { login } from "@/services/UserService";
 const { passwordValidations, emailValidations } = useUser();
 const router = useRouter();
 const form = reactive({
@@ -25,9 +26,18 @@ const validateData = () => {
     return true;
   }
 };
-const handleLogin = () => {
+const handleLogin = async () => {
   if (validateData()) {
     return;
+  }
+  const response = await login({
+    email: form.email,
+    password: form.password,
+  });
+  if (response === "success") {
+    alert("Entro");
+  } else {
+    ("no entro");
   }
   router.push({
     name: "Home",

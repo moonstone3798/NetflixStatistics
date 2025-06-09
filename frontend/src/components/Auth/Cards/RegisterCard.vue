@@ -3,6 +3,7 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
 import Card from "@/components/Generic/Card/Card.vue";
+import { register } from "@/services/UserService";
 const {
   passwordValidations,
   emailValidations,
@@ -77,11 +78,22 @@ const validateData = () => {
   }
   return false;
 };
-const handleLogin = () => {
+const handleLogin = async () => {
   if (validateData()) {
     return;
   }
-  router.push("/aboutUs");
+  const response = await register({
+    name: form.name,
+    lastName: form.lastName,
+    email: form.email,
+    password: form.password,
+  });
+  if (response.status === "success") {
+    alert("Entro");
+    router.push("/aboutUs");
+  } else {
+    alert("No entro");
+  }
 };
 </script>
 <template>
@@ -113,7 +125,7 @@ const handleLogin = () => {
             >Registrarse Como Administrador</label
           >
         </div>
-        <button @click="handleLogin" class="button-netflix">Crear</button>
+        <button type="submit" class="button-netflix">Crear</button>
         <div class="flex items-center gap-x-1 mt-4 text-white">
           <p class="font-normal">¿Tenes una cuenta?</p>
           <router-link to="/login" class="hover:underline font-medium"
