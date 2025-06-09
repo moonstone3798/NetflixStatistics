@@ -19,15 +19,15 @@ try {
 
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data["nombre"], $data["apellido"], $data["mail"], $data["constraenia"])) {
+    if (!isset($data["nombre"], $data["apellido"], $data["mail"], $data["contrasenia"])) {
         throw new Exception("Datos incompletos");
     }
 
     $nombre = mysqli_real_escape_string($cnx, $data["nombre"]);
     $apellido = mysqli_real_escape_string($cnx, $data["apellido"]);
     $mail = mysqli_real_escape_string($cnx, $data["mail"]);
-    $constraenia = mysqli_real_escape_string($cnx, $data["constraenia"]);
-    $hashedPassword = password_hash($constraenia, PASSWORD_DEFAULT);
+    $contrasenia = mysqli_real_escape_string($cnx, $data["contrasenia"]);
+    $hashedPassword = password_hash($contrasenia, PASSWORD_DEFAULT);
 
     // Verificar si el usuario ya existe
     $sql = "SELECT * FROM usuarios WHERE mail = '$mail'";
