@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "@/views/Auth/Login.vue";
 import Register from "@/views/Auth/Register.vue";
 import ResetPassword from "@/views/Auth/ResetPassword.vue";
-import Home from "@/views/Auth/Home.vue";
+import Welcome from "@/views/Auth/Welcome.vue";
 import AboutUs from "@/views/Main/AboutUs/AboutUs.vue";
+import Home from "@/views/Main/Home/Home.vue";
 import MyGraphics from "@/views/Main/MyGraphics/MyGraphics.vue";
 const routes = [
   {
@@ -30,9 +31,19 @@ const routes = [
   },
   {
     path: "/",
+    name: "Welcome",
+    component: Welcome,
+    meta: {
+      layout: "WelcomeLayout",
+      requiresAuth: false,
+      bg: "bg-welcome-img",
+    },
+  },
+  {
+    path: "/Home",
     name: "Home",
     component: Home,
-    meta: { layout: "HomeLayout", requiresAuth: false, bg: "bg-home-img" },
+    meta: { layout: "MainLayout", requiresAuth: false },
   },
   {
     path: "/aboutUs",

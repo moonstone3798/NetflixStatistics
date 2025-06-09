@@ -6,8 +6,8 @@ export const login = async (params) => {
       mail: params.email,
       contrasenia: params.password,
     };
-    await api.post(url, payload);
-    return { status: "success" };
+    const response = await api.post(url, payload);
+    return { status: "success", data: response.data };
   } catch (error) {
     console.error("Error: ", error);
     return { status: "error" };
@@ -22,8 +22,8 @@ export const register = async (params) => {
       mail: params.email,
       contrasenia: params.password,
     };
-    await api.post(url, payload);
-    return { status: "success" };
+    const response = await api.post(url, payload);
+    return { status: "success", data: response.data };
   } catch (error) {
     console.error("Error: ", error);
     return { status: "error" };

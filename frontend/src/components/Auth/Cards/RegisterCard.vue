@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
 import Card from "@/components/Generic/Card/Card.vue";
 import { register } from "@/services/UserService";
+import Swal from "sweetalert2";
 const {
   passwordValidations,
   emailValidations,
@@ -89,9 +90,50 @@ const handleLogin = async () => {
     password: form.password,
   });
   if (response.status === "success") {
-    router.push("/aboutUs");
+    if (response.data.status === "error") {
+      Swal.fire({
+        title: "¡Error!",
+        text: response.data.message,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2500,
+        background: "#050505",
+        color: "#f1f1f1",
+        iconColor: "#E50914",
+        customClass: {
+          popup: "swal2-dark swal-rounded",
+        },
+      });
+    } else {
+      router.push("/aboutUs");
+      Swal.fire({
+        title: "¡Éxito!",
+        text: response.data.message,
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2500,
+        background: "#050505",
+        color: "#f1f1f1",
+        iconColor: "#0bde35",
+        customClass: {
+          popup: "swal2-dark swal-rounded",
+        },
+      });
+    }
   } else {
-    alert("No se ha podido registrar el usuario");
+    Swal.fire({
+      title: "¡Error!",
+      text: "Error en la llamada de registro",
+      icon: "error",
+      showConfirmButton: false,
+      timer: 2500,
+      background: "#050505",
+      color: "#f1f1f1",
+      iconColor: "#E50914",
+      customClass: {
+        popup: "swal2-dark swal-rounded",
+      },
+    });
   }
 };
 </script>

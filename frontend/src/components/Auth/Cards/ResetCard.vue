@@ -30,7 +30,7 @@ const validateEmail = () => {
           {{ emailError }}
         </p>
       </div>
-      <button class="button-netflix"></button
-    ></template>
+      <button class="button-netflix">Enviarme Email</button></template
+    >
   </Card>
 </template>

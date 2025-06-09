@@ -20,13 +20,13 @@ const redirectToLogin = () => {
   <nav
     class="w-[95%] py-3.5 flex md:justify-between items-center flex-col md:flex-row gap-y-4 md:gap-y-0"
   >
-    <router-link to="/dashboard">
+    <router-link to="/home">
       <NIcon class="opacity-100 max-" />
     </router-link>
     <div class="flex items-center gap-x-5">
       <ul class="text-white gap-x-9 flex items-center justify-between">
         <li>
-          <router-link to="/dashboard">Home</router-link>
+          <router-link to="/home">Home</router-link>
         </li>
         <li>
           <router-link to="/myGraphics">Mis Gráficos</router-link>
