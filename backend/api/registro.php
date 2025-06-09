@@ -14,10 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-$nombre = $_POST["nombre"];
-$apellido = $_POST["apellido"];
-$mail = $_POST["mail"];
-$constraenia = $_POST["constraenia"];
+if (!isset($data["nombre"]) || !isset($data["apellido"]) || !isset($data["mail"]) || !isset($data["constraenia"])) {
+    echo json_encode(["status" => "error", "message" => "Datos incompletos"]);
+    exit;
+}
+
+$nombre = $data["nombre"];
+$apellido = $data["apellido"];
+$mail = $data["mail"];
+$constraenia = $data["constraenia"];
 $avatar = null;
 
 $sql = "SELECT * FROM usuarios WHERE mail = '".mysqli_real_escape_string($cnx, $email)."' ";
@@ -31,10 +36,10 @@ if (mysqli_num_rows($res) == 1) {
 } else {
     // puede crear el usuario 
     $insert = "INSERT INTO usuarios 
-    SET nombre = $nombre,
-    apellido = $apellido,
-    email = $email,
-    constraenia = $constraenia,
+    SET nombre = '".mysqli_real_escape_string($cnx, $nombre)."',
+    apellido = '".mysqli_real_escape_string($cnx, $apellido)."',
+    email = '".mysqli_real_escape_string($cnx, $email)."',
+    constraenia = '".mysqli_real_escape_string($cnx, $constraenia)."',
     is_admin = 0,
     avatar = $avatar";
     mysqli_query($cnx,$insert);

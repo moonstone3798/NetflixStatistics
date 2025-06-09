@@ -1,5 +1,4 @@
 <?php
-
 require '../config/conexion.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
@@ -15,13 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-if (!isset($_POST["mail"]) || !isset($_POST["constraenia"])) {
+if (!isset($data["mail"]) || !isset($data["constraenia"])) {
     echo json_encode(["status" => "error", "message" => "Datos incompletos"]);
     exit;
 }
 
-$mail = $_POST["mail"];
-$constraenia = $_POST["constraenia"];
+$mail = $data["mail"];
+$constraenia = $data["constraenia"];
 
 $sql = "SELECT * FROM usuarios WHERE mail = '".mysqli_real_escape_string($cnx, $mail)."' ";
 $res = mysqli_query($cnx, $sql);
