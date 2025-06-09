@@ -34,19 +34,19 @@ const handleLogin = async () => {
     email: form.email,
     password: form.password,
   });
-  if (response === "success") {
+  if (response.status === "success") {
     alert("Entro");
+    router.push({
+      name: "Home",
+      params: {
+        email: form.email,
+        password: form.password,
+        isAdmin: form.isAdmin,
+      },
+    });
   } else {
-    ("no entro");
+    alert("no entro");
   }
-  router.push({
-    name: "Home",
-    params: {
-      email: form.email,
-      password: form.password,
-      isAdmin: form.isAdmin,
-    },
-  });
 };
 </script>
 <template>
@@ -78,7 +78,7 @@ const handleLogin = async () => {
             {{ errors.password }}
           </p>
         </div>
-        <button @click="handleLogin" class="button-netflix">Ingresar</button>
+        <button type="submit" class="button-netflix">Ingresar</button>
       </form>
       <router-link to="/resetPassword" class="text-white hover:underline">
         <p class="mt-4 text-center text-sm text-white">
