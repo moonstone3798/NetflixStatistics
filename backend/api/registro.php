@@ -1,13 +1,15 @@
 <?php
 require './config/conexion.php';
 
+// Permitir CORS
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 
-// si el método es OPTIONS (preflight), termina la ejecución
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
+// Manejo del preflight (solicitud OPTIONS)
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
 }
 
 $nombre = $_POST["nombre"];
@@ -16,7 +18,7 @@ $mail = $_POST["mail"];
 $constraenia = $_POST["constraenia"];
 $avatar = null;
 
-$sql = "SELECT * FROM usuarios WHERE mail = $email";
+$sql = "SELECT * FROM usuarios WHERE mail = '".mysqli_real_escape_string($cnx, $email)."' ";
 $res = mysqli_query($cnx,$sql);
 
 if (mysqli_num_rows($res) == 1) {
