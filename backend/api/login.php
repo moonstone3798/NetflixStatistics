@@ -1,6 +1,15 @@
 <?php
 require './config/conexion.php';
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// si el método es OPTIONS (preflight), termina la ejecución
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 $mail = $_POST["mail"];
 $constraenia = $_POST["constraenia"];
 
