@@ -1,7 +1,7 @@
 import api from "@/axios/axios.js";
 export const login = async (params) => {
   try {
-    const url = `/api/Login.php`;
+    const url = `/login.php`;
     const payload = {
       mail: params.email,
       contrasenia: params.password,

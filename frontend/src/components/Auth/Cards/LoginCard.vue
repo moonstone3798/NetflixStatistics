@@ -35,15 +35,7 @@ const handleLogin = async () => {
     password: form.password,
   });
   if (response.status === "success") {
-    alert("Entro");
-    router.push({
-      name: "Home",
-      params: {
-        email: form.email,
-        password: form.password,
-        isAdmin: form.isAdmin,
-      },
-    });
+    router.push("/aboutUs");
   } else {
     alert("no entro");
   }
