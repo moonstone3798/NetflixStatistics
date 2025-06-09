@@ -51,7 +51,7 @@ const handleLogin = async () => {
         },
       });
     } else {
-      router.push("/aboutUs");
+      router.push("/home");
       Swal.fire({
         title: "¡Éxito!",
         text: response.data.message,
