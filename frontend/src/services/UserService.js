@@ -4,7 +4,7 @@ export const login = async (params) => {
     const url = `/api/Login.php`;
     const payload = {
       mail: params.email,
-      constraenia: params.password,
+      contrasenia: params.password,
     };
     await api.post(url, payload);
     return { status: "success" };
@@ -20,7 +20,7 @@ export const register = async (params) => {
       nombre: params.name,
       apellido: params.lastName,
       mail: params.email,
-      constraenia: params.password,
+      contrasenia: params.password,
     };
     await api.post(url, payload);
     return { status: "success" };
