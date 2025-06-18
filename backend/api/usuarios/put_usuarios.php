@@ -1,0 +1,61 @@
+<?php
+require __DIR__ . '/../../config/conexion.php';
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+
+    $input = file_get_contents("php://input");
+    $data = json_decode($input, true);
+
+    if (!isset($data['id']) || !filter_var($data['id'], FILTER_VALIDATE_INT)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'ID inválido o no proporcionado']);
+        exit;
+    }
+
+    $id = (int)$data['id'];
+    $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
+    $apellido = isset($data['apellido']) ? trim($data['apellido']) : null;
+    $mail = isset($data['mail']) ? trim($data['mail']) : null;
+    $contrasenia = isset($data['contrasenia']) ? trim($data['contrasenia']) : null;
+    $is_admin = isset($data['is_admin']) ? trim($data['is_admin']) : null;
+    $avatar = isset($data['avatar']) ? trim($data['avatar']) : null;
+
+    if (!$id || !$nombre ) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Faltan campos requeridos']);
+        exit;
+    }
+
+    $id = mysqli_real_escape_string($cnx, $id);
+    $nombre = mysqli_real_escape_string($cnx, $nombre);
+
+    $sql = "UPDATE usuarios 
+            SET nombre = '$nombre'
+            , apellido = '$apellido'
+            , mail = '$mail'
+            , contrasenia = '$contrasenia'
+            , is_admin = $is_admin
+            , avatar = '$avatar'
+            WHERE id_director = $id";
+
+    $res = mysqli_query($cnx, $sql);
+
+    if ($res) {
+        if (mysqli_affected_rows($cnx) > 0) {
+            echo json_encode(['mensaje' => 'Usuario actualizado correctamente']);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'No se encontró un usuario con ese ID']);
+        }
+    } else {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al ejecutar la consulta']);
+    }
+} else {
+    http_response_code(405);
+    echo json_encode(['error' => 'Método no permitido']);
+}
+
+mysqli_close($cnx);
+?>
