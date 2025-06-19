@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         
                         $show_id = $datos[0];
 
-                        $type = $datos[1];
+                        $type = trim($datos[1]);
                         $sql="SELECT * FROM tipos_produccion WHERE nombre = '".mysqli_real_escape_string($cnx,$type)."' ";
                         $res=mysqli_query($cnx,$sql);
                         if(mysqli_num_rows($res)==1){
@@ -48,12 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $id_tipo = mysqli_insert_id($cnx);
                         }
 
-                        $title = $datos[2];
+                        $title = trim($datos[2]);
 
-                        $directors = $datos[3];; // es una lista
+                        $directors = $datos[3]; // es una lista
                         $array_director = explode(",", $directors);
 
                         foreach ($array_director as $key => $director) {
+                            $director = trim($director);
                             $sql="SELECT * FROM directores WHERE nombre = '".mysqli_real_escape_string($cnx,$director)."' ";
                             $res=mysqli_query($cnx,$sql);
                             $id_directores=[];
@@ -72,10 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
 
 
-                        $casts = $datos[4];; // es una lista
+                        $casts = $datos[4]; // es una lista
                         $array_cast = explode(",", $casts);
 
                         foreach ($array_cast as $key => $reparto) {
+                            $reparto = trim($reparto);
                             $sql="SELECT * FROM repartos WHERE nombre = '".mysqli_real_escape_string($cnx,$reparto)."' ";
                             $res=mysqli_query($cnx,$sql);
                             $id_repartos=[];
@@ -93,10 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         }
 
-                        $countrys = $datos[5];; // es una lista
+                        $countrys = $datos[5]; // es una lista
                         $array_country = explode(",", $countrys);
 
                         foreach ($array_country as $key => $pais) {
+                            $pais = trim($pais);
                             $sql="SELECT * FROM paises WHERE nombre = '".mysqli_real_escape_string($cnx,$pais)."' ";
                             $res=mysqli_query($cnx,$sql);
                             $id_paises=[];
@@ -114,24 +117,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         }
 
-                        $date_added = $datos[6];
-                        $release_year = $datos[7];
-
-                        //echo "<br>".$datos[9]."<br>";
+                        $date_added = trim($datos[6]);
+                        $release_year = trim($datos[7]);
 
                         if( empty($datos[9]) ){
                             $duration = NULL;
                         }else{
-                            $duration = mysqli_real_escape_string($cnx,$datos[9]);
+                            $duration = mysqli_real_escape_string($cnx,trim($datos[9]));
                         }
-
-                        //echo "<br>".$duration."<br>";
 
                         $genres = $datos[10]; // es una lista
                         $array_generos = explode(",", $genres);
 
                         foreach ($array_generos as $key => $genero) {
-                            $sql="SELECT * FROM generos WHERE nombre = '".mysqli_real_escape_string($cnx,$genero)."' ";
+                            $sql="SELECT * FROM generos WHERE nombre = '".mysqli_real_escape_string($cnx,trim($genero))."' ";
                             $res=mysqli_query($cnx,$sql);
                             $id_generos=[];
                             if(mysqli_num_rows($res)==1){
@@ -148,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         }
 
-                        $language = $datos[11];
+                        $language = trim($datos[11]);
                         $sql="SELECT * FROM idiomas WHERE idioma = '".mysqli_real_escape_string($cnx,$language)."' ";
                         $res=mysqli_query($cnx,$sql);
                         if(mysqli_num_rows($res)==1){
@@ -164,13 +163,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $id_idioma = mysqli_insert_id($cnx);
                         }
 
-                        $description = $datos[12];
-                        $popularity = $datos[13];
-                        $vote_count = $datos[14];
-                        $rating = $datos[8];
-                        $vote_avarage = $datos[15];
-                        $budget = $datos[16];
-                        $revenue = $datos[17];
+                        $description = trim($datos[12]);
+                        $popularity = trim($datos[13]);
+                        $vote_count = trim($datos[14]);
+                        $rating = trim($datos[8]);
+                        $vote_avarage = trim($datos[15]);
+                        $budget = trim($datos[16]);
+                        $revenue = trim($datos[17]);
 
                         //DATOS EXTRAS
                         $insert = "INSERT INTO datos_extras SET
@@ -193,8 +192,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         id_idioma = $id_idioma ,
                         id_datos_extras = $id_datos_extras ,
                         id_tipo = $id_tipo ";
-
-                        //echo $insert;exit;
 
                         $res=mysqli_query($cnx,$insert);
                         $id_produccion = mysqli_insert_id($cnx);
