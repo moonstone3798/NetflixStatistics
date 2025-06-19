@@ -29,6 +29,9 @@ const redirectToLogin = () => {
           <router-link to="/home">Home</router-link>
         </li>
         <li>
+          <router-link to="/data">Datos</router-link>
+        </li>
+        <li>
           <router-link to="/myGraphics">Mis Gráficos</router-link>
         </li>
         <li>
