@@ -168,8 +168,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $vote_count = trim($datos[14]);
                         $rating = trim($datos[8]);
                         $vote_avarage = trim($datos[15]);
-                        $budget = trim($datos[16]);
-                        $revenue = trim($datos[17]);
+                        $budget = isset($budget) && $budget !== '' ? (float)$budget : 'NULL';
+                        $revenue = isset($revenue) && $revenue !== '' ? (float)$revenue : 'NULL';
 
                         //DATOS EXTRAS
                         $insert = "INSERT INTO datos_extras SET
