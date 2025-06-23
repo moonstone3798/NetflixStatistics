@@ -15,11 +15,10 @@ const dropzoneOptions = {
   dictDefaultMessage: "Arrastra tu archivo CSV aquí o haz clic para subir",
 };
 </script>
-
 <template>
-  <div class="max-w-[67%] w-full">
+  <div class="flex flex-col w-[63%]">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-white font-bold">Diseñar tu gráfico</h2>
+      <h2 class="text-white font-bold">Agregar nuevos datos</h2>
       <a href="../../../../public/csv/plantilla.csv">
         <button class="button-netflix max-w-48">Descargar plantilla</button></a
       >

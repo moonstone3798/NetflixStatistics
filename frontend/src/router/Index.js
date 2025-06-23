@@ -6,6 +6,7 @@ import Welcome from "@/views/Auth/Welcome.vue";
 import AboutUs from "@/views/Main/AboutUs/AboutUs.vue";
 import Home from "@/views/Main/Home/Home.vue";
 import MyGraphics from "@/views/Main/MyGraphics/MyGraphics.vue";
+import Data from "@/views/Main/Data/Data.vue";
 const routes = [
   {
     path: "/login",
@@ -40,9 +41,15 @@ const routes = [
     },
   },
   {
-    path: "/Home",
+    path: "/home",
     name: "Home",
     component: Home,
+    meta: { layout: "MainLayout", requiresAuth: false },
+  },
+  {
+    path: "/data",
+    name: "Data",
+    component: Data,
     meta: { layout: "MainLayout", requiresAuth: false },
   },
   {

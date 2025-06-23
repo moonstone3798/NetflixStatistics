@@ -19,3 +19,18 @@ input:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
   
 }
+.netflix-table{
+  @apply rounded-xl border border-netflix-brown  border-separate  border-spacing-0 overflow-hidden
+}
+.netflix-table-header{
+  @apply bg-netflix-brownDark text-white  text-xl leading-7  
+}
+.netflix-table-header-th{
+  @apply py-2 px-4 font-normal	
+}
+.netflix-h2{
+  @apply font-semibold	text-4xl	text-white
+}
+.netflix-table-body{
+  @apply  text-white text-sm leading-5 font-normal
+}
