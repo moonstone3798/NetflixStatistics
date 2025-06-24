@@ -1,5 +1,9 @@
 {
-  "dependencies": {
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui"
+  }
+  ,"dependencies": {
     "dropzone-vue3": "^1.0.2",
     "sweetalert2": "^11.22.0"
   }
