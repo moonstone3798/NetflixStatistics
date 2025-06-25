@@ -6,7 +6,7 @@
     <table class="netflix-table">
       <thead class="netflix-table-header">
         <tr>
-          <th class="netflix-table-header-th">#</th>
+          <th class="netflix-table-header-th">Id</th>
           <th class="netflix-table-header-th">Popularidad</th>
           <th class="netflix-table-header-th">Votos</th>
           <th class="netflix-table-header-th">Rating</th>

@@ -1,8 +1,6 @@
 <script setup>
 import NIcon from "../../../../public/Icon/NIcon.vue";
-import { useRouter } from "vue-router";
 import Avatar from "../../Generic/Avatar/Avatar.vue";
-const router = useRouter();
 const props = defineProps({
   withButton: {
     type: Boolean,
@@ -10,11 +8,7 @@ const props = defineProps({
     required: false,
   },
 });
-const redirectToLogin = () => {
-  router.push({
-    name: "Login",
-  });
-};
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 </script>
 <template>
   <nav
@@ -25,13 +19,13 @@ const redirectToLogin = () => {
     </router-link>
     <div class="flex items-center gap-x-5">
       <ul class="text-white gap-x-9 flex items-center justify-between">
-        <li>
+        <li v-if="userInfo.is_admin == 1">
           <router-link to="/home">Home</router-link>
         </li>
-        <li>
+        <li v-if="userInfo.is_admin == 1">
           <router-link to="/data">Datos</router-link>
         </li>
-        <li>
+        <li v-else-if="userInfo.is_admin == 0">
           <router-link to="/myGraphics">Mis Gráficos</router-link>
         </li>
         <li>

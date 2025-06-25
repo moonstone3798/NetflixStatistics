@@ -88,6 +88,7 @@ const handleLogin = async () => {
     lastName: form.lastName,
     email: form.email,
     password: form.password,
+    isAdmin: form.isAdmin,
   });
   if (response.status === "success") {
     if (response.data.status === "error") {
@@ -106,6 +107,7 @@ const handleLogin = async () => {
       });
     } else {
       router.push("/home");
+      localStorage.setItem("userInfo", JSON.stringify(response.data.data));
       Swal.fire({
         title: "¡Éxito!",
         text: response.data.message,
