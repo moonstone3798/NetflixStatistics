@@ -19,7 +19,7 @@ try {
 
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data["nombre"], $data["apellido"], $data["mail"], $data["contrasenia"])) {
+    if (!isset($data["nombre"], $data["apellido"], $data["mail"], $data["contrasenia"], $data["is_admin"])) {
         throw new Exception("Datos incompletos");
     }
 
@@ -28,6 +28,7 @@ try {
     $mail = mysqli_real_escape_string($cnx, $data["mail"]);
     $contrasenia = mysqli_real_escape_string($cnx, $data["contrasenia"]);
     $hashedPassword = password_hash($contrasenia, PASSWORD_DEFAULT);
+    $is_admin = mysqli_real_escape_string($cnx, $data["is_admin"]);
 
     // Verificar si el usuario ya existe
     $sql = "SELECT * FROM usuarios WHERE mail = '$mail'";
@@ -43,7 +44,7 @@ try {
 
     // Insertar nuevo usuario
     $insert = "INSERT INTO usuarios (nombre, apellido, mail, contrasenia, is_admin, avatar)
-               VALUES ('$nombre', '$apellido', '$mail', '$hashedPassword', 0, NULL)";
+               VALUES ('$nombre', '$apellido', '$mail', '$hashedPassword', $is_admin, NULL)";
     
     mysqli_query($cnx, $insert);
 
