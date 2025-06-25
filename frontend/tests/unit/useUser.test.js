@@ -57,8 +57,8 @@ describe("useUser", () => {
     const error = lastNameValidations.find((v) => v.condition("L"));
     expect(error.message).toBe("el apellido debe tener al menos 2 caracteres");
   });
-  it("devuelve mensaje si se realiza registro sin contraseña", () => {
-    const error = passwordValidations.find((v) => v.condition(""));
-    expect(error.message).toBe("La contraseña es obligatoria");
+  it("devuelve mensaje correcto si email no tiene su respectivo formato", () => {
+    const error = emailValidations.find((v) => v.condition("asd"));
+    expect(error.message).toBe("El email no tiene un formato válido");
   });
 });
