@@ -1,44 +1,55 @@
-import { describe, it, expect } from 'vitest'
-import { useUser } from '@/composables/useUser'
+import { describe, it, expect } from "vitest";
+import { useUser } from "@/composables/useUser";
 
-describe('useUser', () => {
+describe("useUser", () => {
   const {
     validateEmailFormat,
     validatePasswordFormat,
     emailValidations,
     passwordValidations,
-    repeatPasswordValidations
-  } = useUser()
+    repeatPasswordValidations,
+    nameValidations,
+  } = useUser();
 
-  it('valida formato de email correctamente', () => {
-    expect(validateEmailFormat('usuario@dominio.com')).toBe(true)
-    expect(validateEmailFormat('usuario@.com')).toBe(false)
-    expect(validateEmailFormat('usuario')).toBe(false)
-  })
+  it("valida formato de email correctamente", () => {
+    expect(validateEmailFormat("usuario@dominio.com")).toBe(true);
+    expect(validateEmailFormat("usuario@.com")).toBe(false);
+    expect(validateEmailFormat("usuario")).toBe(false);
+  });
 
-  it('valida formato de contraseña correctamente', () => {
-    expect(validatePasswordFormat('abc123')).toBe(true)
-    expect(validatePasswordFormat('123456')).toBe(false) // solo números
-    expect(validatePasswordFormat('abcdef')).toBe(false) // solo letras
-    expect(validatePasswordFormat('a1')).toBe(false) // muy corta
-  })
+  it("valida formato de contraseña correctamente", () => {
+    expect(validatePasswordFormat("abc123")).toBe(true);
+    expect(validatePasswordFormat("123456")).toBe(false); // solo números
+    expect(validatePasswordFormat("abcdef")).toBe(false); // solo letras
+    expect(validatePasswordFormat("a1")).toBe(false); // muy corta
+  });
 
-  it('devuelve mensaje correcto si email es vacío', () => {
-    const error = emailValidations.find(v => v.condition(''))
-    expect(error.message).toBe('El email es obligatorio')
-  })
+  it("devuelve mensaje correcto si email es vacío", () => {
+    const error = emailValidations.find((v) => v.condition(""));
+    expect(error.message).toBe("El email es obligatorio");
+  });
 
-  it('devuelve mensaje si contraseña no tiene número', () => {
-    const error = passwordValidations.find(v => v.condition('abcdef'))
-    expect(error.message).toBe('La contraseña debe contener al menos una letra y un número')
-  })
+  it("devuelve mensaje si contraseña no tiene número", () => {
+    const error = passwordValidations.find((v) => v.condition("abcdef"));
+    expect(error.message).toBe(
+      "La contraseña debe contener al menos una letra y un número"
+    );
+  });
 
-  it('devuelve mensaje si contraseña es muy larga', () => {
-    const error = passwordValidations.find(v => v.condition('a1'.repeat(11))) // 22 chars
-    expect(error.message).toBe('La contraseña no puede tener más de 20 caracteres')
-  })
-  it('devuelve mensaje si las contraseñas no coinciden', () => {
-    const error =  repeatPasswordValidations.find(v => v.condition('acd123','123acd')) 
-    expect(error.message).toBe('Las contraseñas deben coincidir')
-  })
-})
+  it("devuelve mensaje si contraseña es muy larga", () => {
+    const error = passwordValidations.find((v) => v.condition("a1".repeat(11))); // 22 chars
+    expect(error.message).toBe(
+      "La contraseña no puede tener más de 20 caracteres"
+    );
+  });
+  it("devuelve mensaje si las contraseñas no coinciden", () => {
+    const error = repeatPasswordValidations.find((v) =>
+      v.condition("acd123", "123acd")
+    );
+    expect(error.message).toBe("Las contraseñas deben coincidir");
+  });
+  it("devuelve mensaje si el nombre tiene menos de 3 caracteres", () => {
+    const error = nameValidations.find((v) => v.condition("Lu"));
+    expect(error.message).toBe("El nombre debe tener al menos 3 caracteres");
+  });
+});
