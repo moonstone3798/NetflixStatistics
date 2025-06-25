@@ -7,6 +7,7 @@ describe('useUser', () => {
     validatePasswordFormat,
     emailValidations,
     passwordValidations,
+    repeatPasswordValidations
   } = useUser()
 
   it('valida formato de email correctamente', () => {
@@ -35,5 +36,9 @@ describe('useUser', () => {
   it('devuelve mensaje si contraseña es muy larga', () => {
     const error = passwordValidations.find(v => v.condition('a1'.repeat(11))) // 22 chars
     expect(error.message).toBe('La contraseña no puede tener más de 20 caracteres')
+  })
+  it('devuelve mensaje si las contraseñas no coinciden', () => {
+    const error =  repeatPasswordValidations.find(v => v.condition('acd123','123acd')) 
+    expect(error.message).toBe('Las contraseñas deben coincidir')
   })
 })
