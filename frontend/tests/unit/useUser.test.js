@@ -9,6 +9,7 @@ describe("useUser", () => {
     passwordValidations,
     repeatPasswordValidations,
     nameValidations,
+    lastNameValidations
   } = useUser();
 
   it("valida formato de email correctamente", () => {
@@ -51,5 +52,9 @@ describe("useUser", () => {
   it("devuelve mensaje si el nombre tiene menos de 3 caracteres", () => {
     const error = nameValidations.find((v) => v.condition("Lu"));
     expect(error.message).toBe("El nombre debe tener al menos 3 caracteres");
+  });
+  it("devuelve mensaje si el apellido tiene menos de 2 caracteres", () => {
+    const error = lastNameValidations.find((v) => v.condition("L"));
+    expect(error.message).toBe("el apellido debe tener al menos 2 caracteres");
   });
 });
