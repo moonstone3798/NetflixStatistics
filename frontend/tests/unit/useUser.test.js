@@ -9,7 +9,7 @@ describe("useUser", () => {
     passwordValidations,
     repeatPasswordValidations,
     nameValidations,
-    lastNameValidations
+    lastNameValidations,
   } = useUser();
 
   it("valida formato de email correctamente", () => {
@@ -56,5 +56,9 @@ describe("useUser", () => {
   it("devuelve mensaje si el apellido tiene menos de 2 caracteres", () => {
     const error = lastNameValidations.find((v) => v.condition("L"));
     expect(error.message).toBe("el apellido debe tener al menos 2 caracteres");
+  });
+  it("devuelve mensaje si se realiza registro sin contraseña", () => {
+    const error = passwordValidations.find((v) => v.condition(""));
+    expect(error.message).toBe("La contraseña es obligatoria");
   });
 });
