@@ -34,7 +34,19 @@ try {
 
         // Comparar contraseña ingresada con la hasheada en la base de datos
         if (password_verify($contrasenia, $row["contrasenia"])) {
-            echo json_encode(["status" => "success", "message" => "Inicio de sesión exitoso"]);
+            echo json_encode([
+                "status" => "success"
+                , "message" => "Inicio de sesión exitoso"
+                , "data" => [
+                    "id_usuario" => $row["id_usuario"]
+                    , "nombre" => $row["nombre"]
+                    , "apellido" => $row["apellido"]
+                    , "mail" => $row["mail"]
+                    , "contrasenia" => $row["contrasenia"]
+                    , "is_admin" => $row["is_admin"]
+                    , "avatar" => $row["avatar"]
+                ]
+            ]);
         } else {
             echo json_encode(["status" => "error", "message" => "Contraseña incorrecta"]);
         }

@@ -52,6 +52,7 @@ const handleLogin = async () => {
       });
     } else {
       router.push("/home");
+      localStorage.setItem("userInfo", JSON.stringify(response.data.data));
       Swal.fire({
         title: "¡Éxito!",
         text: response.data.message,

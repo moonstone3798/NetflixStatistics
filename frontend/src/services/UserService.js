@@ -21,6 +21,7 @@ export const register = async (params) => {
       apellido: params.lastName,
       mail: params.email,
       contrasenia: params.password,
+      is_admin: params.isAdmin,
     };
     const response = await api.post(url, payload);
     return { status: "success", data: response.data };
