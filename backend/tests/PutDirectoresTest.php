@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-class EditarDirectorTest extends TestCase
+class PutDirectoresTest extends TestCase
 {
     private string $url = 'http://localhost/netflix/NetflixStatistics/backend/api/directores/put_directores.php';
 
