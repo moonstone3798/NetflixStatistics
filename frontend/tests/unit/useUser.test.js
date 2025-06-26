@@ -61,4 +61,14 @@ describe("useUser", () => {
     const error = passwordValidations.find((v) => v.condition(""));
     expect(error.message).toBe("La contraseña es obligatoria");
   });
+  it("devuelve mensaje si se realiza registro con un nombre de más de 20 caracteres", () => {
+    const error = nameValidations.find((v) =>
+      v.condition(
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      )
+    );
+    expect(error.message).toBe(
+      "El nombre debe tener como máximo 20 caracteres"
+    );
+  });
 });
