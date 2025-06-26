@@ -38,10 +38,10 @@ try {
 
         if ($res) {
             if (mysqli_affected_rows($cnx) > 0) {
-                echo json_encode(['mensaje' => 'Producción actualizada correctamente']);
+                echo json_encode(['mensaje' => 'Director actualizado correctamente']);
             } else {
                 http_response_code(404);
-                echo json_encode(['error' => 'No se encontró una producción con ese ID']);
+                echo json_encode(['error' => 'No se encontró un Director con ese ID']);
             }
         } else {
             http_response_code(500);
