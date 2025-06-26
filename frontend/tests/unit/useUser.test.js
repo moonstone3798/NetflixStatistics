@@ -71,4 +71,8 @@ describe("useUser", () => {
       "El nombre debe tener como máximo 20 caracteres"
     );
   });
+  it("devuelve mensaje correcto si email no tiene su respectivo formato", () => {
+    const error = emailValidations.find((v) => v.condition("asd"));
+    expect(error.message).toBe("El email no tiene un formato válido");
+  });
 });
