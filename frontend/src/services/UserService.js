@@ -30,3 +30,16 @@ export const register = async (params) => {
     return { status: "error" };
   }
 };
+export const deleteUser = async (params) => {
+  try {
+    const url = `/usuarios/delete_usuarios.php`;
+    const payload = {
+      id: params.id,
+    };
+    const response = await api.post(url, payload);
+    return { status: "success", data: response.data };
+  } catch (error) {
+    console.error("Error: ", error);
+    return { status: "error" };
+  }
+};
