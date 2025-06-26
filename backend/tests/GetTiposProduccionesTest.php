@@ -2,11 +2,11 @@
 
 use PHPUnit\Framework\TestCase;
 
-class GetDirectoresTest extends TestCase
+class GetTiposProduccionesTest extends TestCase
 {
-    private string $baseUrl = 'http://localhost/netflix/NetflixStatistics/backend/api/directores/get_directores.php';
+    private string $baseUrl = 'http://localhost/netflix/NetflixStatistics/backend/api/tipos_producciones/get_tipos_produccion.php';
 
-    public function testGetAllDirectoresReturnsJsonArray()
+    public function testGetAllTypeReturnsJsonArray()
     {
         $response = file_get_contents($this->baseUrl);
         $this->assertNotFalse($response, "La respuesta no debe ser falsa");
@@ -15,11 +15,11 @@ class GetDirectoresTest extends TestCase
         $this->assertIsArray($data, "La respuesta debería ser un array JSON");
 
         if (!empty($data)) {
-            $this->assertArrayHasKey('id_director', $data[0], "Falta clave 'id_director'");
+            $this->assertArrayHasKey('id', $data[0], "Falta clave 'id'");
         }
     }
 
-    public function testGetDirectorByIdReturnsSingleResult()
+    public function testGetTypeByIdReturnsSingleResult()
     {
         $id = 1; 
         $response = file_get_contents($this->baseUrl . '?id=' . $id);
@@ -28,11 +28,11 @@ class GetDirectoresTest extends TestCase
         $data = json_decode($response, true);
         $this->assertIsArray($data, "La respuesta debe ser un array");
 
-        $this->assertCount(1, $data, "Debería retornar un solo director");
-        $this->assertEquals($id, $data[0]['id_director'], "El ID del director no coincide");
+        $this->assertCount(1, $data, "Debería retornar un solo tipo de producción");
+        $this->assertEquals($id, $data[0]['id'], "El ID del tipo de producción no coincide");
     }
 
-    public function testGetDirectorWithInvalidIdReturns400()
+    public function testGetTypeWithInvalidIdReturns400()
     {
         $url = $this->baseUrl . '?id=abc'; 
         $context = stream_context_create(['http' => ['ignore_errors' => true]]);

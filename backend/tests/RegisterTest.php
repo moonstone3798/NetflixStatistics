@@ -32,7 +32,6 @@ class RegisterTest extends TestCase
 
     protected function setUp(): void
     {
-        // Limpiar usuario antes de testear
         $cnx = new mysqli("localhost", "root", "", "netflix_statistics");
         $cnx->query("DELETE FROM usuarios WHERE mail = 'nuevo@ejemplo.com'");
         $cnx->close();
@@ -56,14 +55,12 @@ class RegisterTest extends TestCase
 
     public function testRegistroConMailExistente()
     {
-        // Insertar usuario previamente
         $cnx = new mysqli("localhost", "root", "", "netflix_statistics");
         $hash = password_hash("123456", PASSWORD_DEFAULT);
         $cnx->query("INSERT INTO usuarios (nombre, apellido, mail, contrasenia, is_admin, avatar)
                      VALUES ('Nuevo', 'Usuario', 'nuevo@ejemplo.com', '$hash', 0, NULL)");
         $cnx->close();
 
-        // Intentar registrar otra vez con mismo mail
         $payload = [
             "nombre" => "Nuevo",
             "apellido" => "Usuario",

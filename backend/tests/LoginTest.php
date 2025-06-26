@@ -10,7 +10,7 @@ class LoginTest extends TestCase
     {
         $data = [
             'mail' => 'nadiradad@gmail.com',
-            'contrasenia' => 'nadir123'  // debe coincidir con el hash en la DB
+            'contrasenia' => 'nadir123'  
         ];
 
         $response = $this->sendPostRequest($data);
@@ -69,7 +69,7 @@ class LoginTest extends TestCase
             $this->fail("Error al hacer la solicitud: " . $error['message']);
         }
 
-        echo "\nRespuesta cruda:\n$response\n"; // ← esto te muestra qué llega realmente
+        echo "\nRespuesta cruda:\n$response\n"; 
         return $response;
     }
 
