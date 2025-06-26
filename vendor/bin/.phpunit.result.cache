@@ -1,1 +1,0 @@
-{"version":1,"defects":[],"times":{"LoginTest::testLoginExitoso":0.086,"LoginTest::testLoginConPasswordIncorrecta":0.077,"LoginTest::testLoginConUsuarioInexistente":0.039,"PutDirectoresTest::testEditarDirectorConDatosValidos":0.028}}
