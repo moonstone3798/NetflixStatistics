@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Probar API Repartos</title>
+</head>
+<body>
+  <h2>Probar creación de Reparto</h2>
+
+  <label for="nombre">Nombre del reparto:</label>
+  <input type="text" id="nombre" placeholder="Ej. Reparto de prueba">
+  <button onclick="crearReparto()">Enviar</button>
+
+  <pre id="respuesta"></pre>
+
+  <script>
+    function crearReparto() {
+      const nombre = document.getElementById('nombre').value;
+
+      fetch("http://localhost/netflix/NetflixStatistics/backend/api/repartos/post_repartos.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ nombre })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("respuesta").textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById("respuesta").textContent = "Error: " + error;
+      });
+    }
+  </script>
+</body>
+</html>
