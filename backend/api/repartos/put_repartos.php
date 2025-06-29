@@ -1,5 +1,5 @@
 <?php
-require _DIR_ . '/../../config/conexion.php';
+require __DIR__ . '/../../config/conexion.php';
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
