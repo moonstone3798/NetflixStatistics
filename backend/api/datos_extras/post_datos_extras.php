@@ -23,7 +23,7 @@ try {
         $presupuesto = isset($data['presupuesto']) ? trim($data['presupuesto']) : null;
         $ganancias = isset($data['ganancias']) ? trim($data['ganancias']) : null;
 
-        if (!$popularidad || !$votos || !$rating || !$promedio_votos || !$presupuesto || !$ganancias) {
+        if (is_null($popularidad) || is_null($votos) || is_null($rating) || is_null($promedio_votos) || is_null($presupuesto) || is_null($ganancias)) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
