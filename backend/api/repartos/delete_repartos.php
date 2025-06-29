@@ -48,7 +48,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error en el api delete repartos",
         "error" => $e->getMessage()
     ]);
 }

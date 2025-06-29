@@ -22,8 +22,6 @@ try {
             exit;
         }
 
-        $id = (int)$_GET['id'];
-
         $sql = "DELETE FROM datos_extras WHERE id_dato_extra = $id";
         $res = mysqli_query($cnx, $sql);
 
@@ -49,7 +47,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error en el api delete datos extras",
         "error" => $e->getMessage()
     ]);
 }

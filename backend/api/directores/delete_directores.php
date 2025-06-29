@@ -27,10 +27,10 @@ try {
 
         if ($res) {
             if (mysqli_affected_rows($cnx) > 0) {
-                echo json_encode(['mensaje' => 'Producción eliminada correctamente']);
+                echo json_encode(['mensaje' => 'Director eliminado correctamente']);
             } else {
                 http_response_code(404);
-                echo json_encode(['error' => 'No se encontró una producción con ese ID']);
+                echo json_encode(['error' => 'No se encontró un Director con ese ID']);
             }
         } else {
             http_response_code(500);
@@ -47,7 +47,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error en el api delete directores",
         "error" => $e->getMessage()
     ]);
 }
