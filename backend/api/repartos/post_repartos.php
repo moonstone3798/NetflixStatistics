@@ -1,5 +1,7 @@
 <?php
+
 require __DIR__ . '/../../config/conexion.php';
+
 header('Content-Type: application/json');
 // Configurar CORS correctamente
 header("Access-Control-Allow-Origin: *");
