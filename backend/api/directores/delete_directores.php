@@ -22,8 +22,6 @@ try {
             exit;
         }
 
-        $id = (int)$_GET['id'];
-
         $sql = "DELETE FROM directores WHERE id_director = $id";
         $res = mysqli_query($cnx, $sql);
 
