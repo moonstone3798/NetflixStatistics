@@ -16,6 +16,9 @@ try {
         $input = file_get_contents("php://input");
         $data = json_decode($input, true);
 
+        // Debug temporal:
+        error_log("Datos recibidos: " . print_r($data, true));
+
         $popularidad = isset($data['popularidad']) ? trim($data['popularidad']) : null;
         $votos = isset($data['votos']) ? trim($data['votos']) : null;
         $rating = isset($data['rating']) ? trim($data['rating']) : null;
