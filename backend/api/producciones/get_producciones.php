@@ -12,7 +12,25 @@ try {
         if (isset($_GET['id'])) {
             if (is_numeric($_GET['id'])){
                 $id = mysqli_real_escape_string($cnx, $_GET['id']);
-                $sql = "SELECT * FROM producciones WHERE id_produccion = $id";
+                $sql = "SELECT p.id_produccion
+                        , tp.nombre AS tipo_produccion
+                        , p.titulo
+                        , p.fecha_ingreso
+                        , p.anio_realizacion
+                        , p.duracion
+                        , p.descripcion
+                        , i.idioma
+                        , de.popularidad
+                        , de.votos
+                        , de.rating
+                        , de.promedio_votos
+                        , de.presupuesto
+                        , de.ganancia 
+                        FROM producciones p
+                        INNER JOIN idiomas i ON p.id_idioma = i.id_idioma
+                        INNER JOIN datos_extras de ON p.id_datos_extras = de.id_dato_extra
+                        INNER JOIN tipos_produccion tp ON p.id_tipo = tp.id_tipo_produccion
+                        WHERE id_produccion = $id";
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'ID inválido']);
@@ -20,7 +38,24 @@ try {
             }
             
         } else {
-            $sql = "SELECT * FROM producciones";
+            $sql = "SELECT p.id_produccion
+                    , tp.nombre AS tipo_produccion
+                    , p.titulo
+                    , p.fecha_ingreso
+                    , p.anio_realizacion
+                    , p.duracion
+                    , p.descripcion
+                    , i.idioma
+                    , de.popularidad
+                    , de.votos
+                    , de.rating
+                    , de.promedio_votos
+                    , de.presupuesto
+                    , de.ganancia 
+                    FROM producciones p
+                    INNER JOIN idiomas i ON p.id_idioma = i.id_idioma
+                    INNER JOIN datos_extras de ON p.id_datos_extras = de.id_dato_extra
+                    INNER JOIN tipos_produccion tp ON p.id_tipo = tp.id_tipo_produccion";
         }
 
         $res = mysqli_query($cnx, $sql);
@@ -43,7 +78,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error en el get producciones",
         "error" => $e->getMessage()
     ]);
 }
