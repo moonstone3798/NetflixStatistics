@@ -28,9 +28,9 @@ try {
         $rating = isset($data['rating']) ? trim($data['rating']) : null;
         $promedio_votos = isset($data['promedio_votos']) ? trim($data['promedio_votos']) : null;
         $presupuesto = isset($data['presupuesto']) ? trim($data['presupuesto']) : null;
-        $ganancias = isset($data['ganancias']) ? trim($data['ganancias']) : null;
+        $ganancia = isset($data['ganancia']) ? trim($data['ganancia']) : null;
 
-        if ( !$id || !$popularidad || !$votos || !$rating || !$promedio_votos || !$presupuesto || !$ganancias ) {
+        if ( !$id || !$popularidad || !$votos || !$rating || !$promedio_votos || !$presupuesto || !$ganancia ) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
@@ -41,7 +41,7 @@ try {
         $rating = mysqli_real_escape_string($cnx, $rating);
         $promedio_votos = mysqli_real_escape_string($cnx, $promedio_votos);
         $presupuesto = mysqli_real_escape_string($cnx, $presupuesto);
-        $ganancias = mysqli_real_escape_string($cnx, $ganancias);
+        $ganancia = mysqli_real_escape_string($cnx, $ganancia);
 
         $sql = "UPDATE datos_extras 
                 SET popularidad = $popularidad,
@@ -49,7 +49,7 @@ try {
                 rating = $rating,
                 promedio_votos = $promedio_votos,
                 presupuesto = $presupuesto,
-                ganancias = $ganancias
+                ganancia = $ganancia
                 WHERE id_dato_extra = $id";
 
         $res = mysqli_query($cnx, $sql);
@@ -73,7 +73,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get datos_extras",
+        "message" => "Error en el api datos extras put",
         "error" => $e->getMessage()
     ]);
 }
