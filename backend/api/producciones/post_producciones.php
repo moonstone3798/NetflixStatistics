@@ -51,7 +51,7 @@ try {
             exit;
         }
 
-        $sql = "INSERT INTO directores SET 
+        $sql = "INSERT INTO producciones SET 
                 titulo = '$titulo'
                 , fecha_ingreso = '$fecha_ingreso'
                 , anio_realizacion = '$anio_realizacion'
