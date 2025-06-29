@@ -46,7 +46,7 @@ try {
         } else {
             http_response_code(500);
             echo json_encode([
-                'error' => 'Error al insertar la producción',
+                'error' => 'Error al insertar el reparto',
                 'detalle' => mysqli_error($cnx)
             ]);
         }
@@ -58,7 +58,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error en el post repartos",
         "error" => $e->getMessage()
     ]);
 }
