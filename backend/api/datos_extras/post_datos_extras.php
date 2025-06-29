@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
+
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -23,7 +24,7 @@ try {
         $presupuesto = isset($data['presupuesto']) ? trim($data['presupuesto']) : null;
         $ganancia = isset($data['ganancia']) ? trim($data['ganancia']) : null;
 
-        if (!$popularidad || !$votos || !$rating || $promedio_votos || !$presupuesto || $ganancia ) {
+        if (!$popularidad || !$votos || !$rating || !$promedio_votos || !$presupuesto || !$ganancia) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
