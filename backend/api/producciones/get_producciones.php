@@ -20,7 +20,12 @@ try {
                         , p.duracion
                         , p.descripcion
                         , i.idioma
-                        , p.id_datos_extras
+                        , de.popularidad
+                        , de.votos
+                        , de.rating
+                        , de.promedio_votos
+                        , de.presupuesto
+                        , de.ganancia 
                         FROM producciones p
                         INNER JOIN idiomas i ON p.id_idioma = i.id_idioma
                         INNER JOIN datos_extras de ON p.id_datos_extras = de.id_dato_extra
@@ -41,7 +46,12 @@ try {
                     , p.duracion
                     , p.descripcion
                     , i.idioma
-                    , p.id_datos_extras
+                    , de.popularidad
+                    , de.votos
+                    , de.rating
+                    , de.promedio_votos
+                    , de.presupuesto
+                    , de.ganancia 
                     FROM producciones p
                     INNER JOIN idiomas i ON p.id_idioma = i.id_idioma
                     INNER JOIN datos_extras de ON p.id_datos_extras = de.id_dato_extra
