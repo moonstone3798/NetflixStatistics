@@ -23,20 +23,41 @@ try {
         }
 
         $id = (int)$data['id'];
-        $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
 
-        if (!$id || !$nombre ) {
+        $titulo = isset($data['titulo']) ? trim($data['titulo']) : null;
+        $fecha_ingreso = isset($data['fecha_ingreso']) ? trim($data['fecha_ingreso']) : null;
+        $anio_realizacion = isset($data['anio_realizacion']) ? trim($data['anio_realizacion']) : null;
+        $duracion = isset($data['duracion']) ? trim($data['duracion']) : null;
+        $descripcion = isset($data['descripcion']) ? trim($data['descripcion']) : null;
+        $id_idioma = isset($data['id_idioma']) ? trim($data['id_idioma']) : null;
+        $id_datos_extras = isset($data['id_datos_extras']) ? trim($data['id_datos_extras']) : null;
+        $id_tipo_produccion = isset($data['id_tipo_produccion']) ? trim($data['id_tipo_produccion']) : null;
+
+        if (!$tipo_produccion || !$titulo || !$fecha_ingreso || !$duracion || !$descripcion || !$id_idioma || !$id_datos_extras) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
         }
 
-        $id = mysqli_real_escape_string($cnx, $id);
-        $nombre = mysqli_real_escape_string($cnx, $nombre);
+        $titulo = mysqli_real_escape_string($cnx, $titulo);
+        $fecha_ingreso = mysqli_real_escape_string($cnx, $fecha_ingreso);
+        $anio_realizacion = mysqli_real_escape_string($cnx, $anio_realizacion);
+        $duracion = mysqli_real_escape_string($cnx, $duracion);
+        $descripcion = mysqli_real_escape_string($cnx, $descripcion);
+        $id_idioma = mysqli_real_escape_string($cnx, $id_idioma);
+        $id_datos_extras = mysqli_real_escape_string($cnx, $id_datos_extras);
+        $id_tipo_produccion = mysqli_real_escape_string($cnx, $id_tipo_produccion);
 
-        $sql = "UPDATE directores 
-                SET nombre = '$nombre'
-                WHERE id_director = $id";
+        $sql = "UPDATE producciones SET 
+                titulo = '$titulo'
+                , fecha_ingreso = '$fecha_ingreso'
+                , anio_realizacion = '$anio_realizacion'
+                , duracion = '$duracion'
+                , descripcion = '$descripcion'
+                , id_idioma = $id_idioma
+                , id_datos_extras = $id_datos_extras
+                , id_tipo = $id_tipo
+                WHERE id_produccion = $id";
 
         $res = mysqli_query($cnx, $sql);
 
@@ -59,7 +80,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error en la api put producciones",
         "error" => $e->getMessage()
     ]);
 }
