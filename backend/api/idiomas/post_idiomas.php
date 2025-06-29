@@ -18,7 +18,7 @@ try {
 
         $idioma = isset($data['idioma']) ? trim($data['idioma']) : null;
 
-        if (!$nombre) {
+        if (!$idioma) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
