@@ -16,17 +16,14 @@ try {
         $input = file_get_contents("php://input");
         $data = json_decode($input, true);
 
-        // Debug temporal:
-        error_log("Datos recibidos: " . print_r($data, true));
-
         $popularidad = isset($data['popularidad']) ? trim($data['popularidad']) : null;
         $votos = isset($data['votos']) ? trim($data['votos']) : null;
         $rating = isset($data['rating']) ? trim($data['rating']) : null;
         $promedio_votos = isset($data['promedio_votos']) ? trim($data['promedio_votos']) : null;
         $presupuesto = isset($data['presupuesto']) ? trim($data['presupuesto']) : null;
-        $ganancias = isset($data['ganancias']) ? trim($data['ganancias']) : null;
+        $ganancia = isset($data['ganancia']) ? trim($data['ganancia']) : null;
 
-        if (is_null($popularidad) || is_null($votos) || is_null($rating) || is_null($promedio_votos) || is_null($presupuesto) || is_null($ganancias)) {
+        if (!$popularidad || !$votos || !$rating || $promedio_votos || !$presupuesto || $ganancia ) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
@@ -37,7 +34,7 @@ try {
         $rating = mysqli_real_escape_string($cnx, $rating);
         $promedio_votos = mysqli_real_escape_string($cnx, $promedio_votos);
         $presupuesto = mysqli_real_escape_string($cnx, $presupuesto);
-        $ganancias = mysqli_real_escape_string($cnx, $ganancias);
+        $ganancia = mysqli_real_escape_string($cnx, $ganancia);
 
         // Verificar si ya existe
         /*$verifica_sql = "SELECT id_dato_extra FROM datos_extras WHERE nombre = '$nombre' ";
@@ -55,7 +52,7 @@ try {
                 rating = $rating,
                 promedio_votos = $promedio_votos,
                 presupuesto = $presupuesto,
-                ganancias = $ganancias";
+                ganancia = $ganancia";
         $res = mysqli_query($cnx, $sql);
 
         if ($res) {
@@ -79,7 +76,7 @@ try {
     // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get datos_extras",
+        "message" => "Error en el post datos datos extras",
         "error" => $e->getMessage()
     ]);
 }
