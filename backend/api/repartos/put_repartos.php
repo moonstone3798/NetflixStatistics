@@ -1,15 +1,17 @@
 <?php
-require __DIR__ . '/../../config/conexion.php';
+require _DIR_ . '/../../config/conexion.php';
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS");
 header("Access-Control-Max-Age: 86400");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
+
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
@@ -25,7 +27,7 @@ try {
         $id = (int)$data['id'];
         $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
 
-        if (!$id || !$nombre ) {
+        if (!$id || !$nombre) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
@@ -34,10 +36,7 @@ try {
         $id = mysqli_real_escape_string($cnx, $id);
         $nombre = mysqli_real_escape_string($cnx, $nombre);
 
-        $sql = "UPDATE repartos 
-                SET nombre = '$nombre'
-                WHERE id_reparto = $id";
-
+        $sql = "UPDATE repartos SET nombre = '$nombre' WHERE id_reparto = $id";
         $res = mysqli_query($cnx, $sql);
 
         if ($res) {
@@ -56,10 +55,9 @@ try {
         echo json_encode(['error' => 'Método no permitido']);
     }
 } catch (Exception $e) {
-    // Capturar cualquier error del flujo o de MySQL
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get directores",
+        "message" => "Error general",
         "error" => $e->getMessage()
     ]);
 }
