@@ -17,18 +17,20 @@ try {
         $data = json_decode($input, true);
 
         $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
-        $id_grafico = isset($data['id_grafico']) ? trim($data['id_grafico']) : null;
+        $id_tipo = isset($data['id_tipo']) ? trim($data['id_tipo']) : null;
         $id_usuario = isset($data['id_usuario']) ? trim($data['id_usuario']) : null;
+        $id_query = isset($data['id_query']) ? trim($data['id_query']) : null;
 
-        if ( is_null($nombre) || is_null($id_grafico) || is_null($id_usuario) ) {
+        if ( is_null($nombre) || is_null($id_tipo) || is_null($id_usuario) ) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
         }
 
         $nombre = mysqli_real_escape_string($cnx, $nombre);
-        $id_grafico = (int)$id_grafico;
+        $id_tipo = (int)$id_tipo;
         $id_usuario = (int)$id_usuario;
+        $id_query = (int)$id_query;
 
         $verifica_sql = "SELECT id_vista FROM vistas WHERE nombre = '$nombre' ";
         $verifica_res = mysqli_query($cnx, $verifica_sql);
@@ -41,8 +43,9 @@ try {
 
         $sql = "INSERT INTO vistas SET 
                 nombre = '$nombre',
-                id_grafico = $id_grafico,
-                id_usuario = $id_usuario
+                id_tipo = $id_tipo,
+                id_usuario = $id_usuario,
+                id_query = $id_query
                 ";
         $res = mysqli_query($cnx, $sql);
 
