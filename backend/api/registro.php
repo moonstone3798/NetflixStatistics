@@ -48,7 +48,13 @@ try {
     
     mysqli_query($cnx, $insert);
 
-    echo json_encode(["status" => "success", "message" => "Cuenta creada exitosamente!"]);
+    $id = mysqli_insert_id($cnx);
+
+    echo json_encode([
+        "status" => "success",
+         "message" => "Cuenta creada exitosamente!",
+         "id" => $id
+        ]);
 
 } catch (Exception $e) {
     // Capturar cualquier error del flujo o de MySQL
