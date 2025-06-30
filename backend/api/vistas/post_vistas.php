@@ -20,7 +20,7 @@ try {
         $id_grafico = isset($data['id_grafico']) ? trim($data['id_grafico']) : null;
         $id_usuario = isset($data['id_usuario']) ? trim($data['id_usuario']) : null;
 
-        if ( !$nombre || !$id_usuario || $id_grafico ) {
+        if ( is_null($nombre) || is_null($id_grafico) || is_null($id_usuario) ) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
