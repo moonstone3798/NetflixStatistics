@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
+
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -18,22 +19,34 @@ try {
 
         $query = isset($data['query']) ? trim($data['query']) : null;
 
-        if ( !$query ) {
+        if (!$query) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
         }
 
-        //$query = mysqli_real_escape_string($cnx, $query);
-
         $res = mysqli_query($cnx, $query);
 
         if ($res) {
-            $datos = [];
+            $labels = [];
+            $values = [];
+
             while ($fila = mysqli_fetch_assoc($res)) {
-                $datos[] = $fila;
+                foreach ($fila as $clave => $valor) {
+                    // Asignar valores según tipo de dato: strings a labels, números a values
+                    if (is_numeric($valor)) {
+                        $values[] = $valor;
+                    } else {
+                        $labels[] = $valor;
+                    }
+                }
             }
-            echo json_encode($datos);
+
+            echo json_encode([
+                "labels" => $labels,
+                "data" => $values
+            ]);
+
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'Error al ejecutar la consulta']);
