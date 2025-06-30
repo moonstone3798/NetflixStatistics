@@ -32,14 +32,14 @@ try {
         $id_usuario = (int)$id_usuario;
         $id_query = (int)$id_query;
 
-        $verifica_sql = "SELECT id_vista FROM vistas WHERE nombre = '$nombre' ";
+        /*$verifica_sql = "SELECT id_vista FROM vistas WHERE nombre = '$nombre' ";
         $verifica_res = mysqli_query($cnx, $verifica_sql);
 
         if (mysqli_num_rows($verifica_res) > 0) {
             http_response_code(409);
             echo json_encode(['error' => 'Ya existe un vista con ese query']);
             exit;
-        }
+        }*/
 
         $sql = "INSERT INTO vistas SET 
                 nombre = '$nombre',
