@@ -16,18 +16,16 @@ try {
         $input = file_get_contents("php://input");
         $data = json_decode($input, true);
 
-        $id = (int)$data['id'];
         $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
         $id_grafico = (int)$data['id_grafico'];
         $id_usuario = (int)$data['id_usuario'];
 
-        if (!$id || !$nombre || !$id_usuario || $id_grafico ) {
+        if ( !$nombre || !$id_usuario || $id_grafico ) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
         }
 
-        $id = mysqli_real_escape_string($cnx, $id);
         $nombre = mysqli_real_escape_string($cnx, $nombre);
         $id_grafico = mysqli_real_escape_string($cnx, $id_grafico);
         $id_usuario = mysqli_real_escape_string($cnx, $id_usuario);

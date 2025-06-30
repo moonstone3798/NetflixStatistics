@@ -30,35 +30,23 @@ try {
         if ($res) {
             $labels = [];
             $values = [];
-            $title = null;
-
-            $field_info = mysqli_fetch_fields($res);
-            if (count($field_info) > 0) {
-                // Obtener el nombre del primer campo
-                $title = $field_info[0]->name;
-
-                // Si quieres "pluralizar" (muy básico, solo agrega 's' si no termina con 's')
-                /*if (substr($title, -1) !== 's') {
-                    $title .= 's';
-                }*/
-            }
 
             while ($fila = mysqli_fetch_assoc($res)) {
-                foreach ($fila as $clave => $valor) {
-                    if (is_numeric($valor)) {
-                        $values[] = $valor;
-                    } else {
-                        $labels[] = $valor;
-                    }
-                }
+                $keys = array_keys($fila);
+                // Primer campo
+                $labels[] = $fila[$keys[0]];
+                // Segundo campo
+                $values[] = $fila[$keys[1]];
             }
+
+            // El título puede ser el nombre del segundo campo (o cualquiera que quieras)
+            $title = isset($keys[0]) ? $keys[0] : '';
 
             echo json_encode([
                 "title" => $title,
                 "labels" => $labels,
                 "data" => $values
             ]);
-
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'Error al ejecutar la consulta']);
