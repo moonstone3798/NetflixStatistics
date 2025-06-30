@@ -16,44 +16,48 @@ try {
         $input = file_get_contents("php://input");
         $data = json_decode($input, true);
 
-        $id_tipo = (int)$data['id_tipo'];
-        $id_query = (int)$data['id_query'];
+        $id = (int)$data['id'];
+        $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
+        $id_grafico = (int)$data['id_grafico'];
+        $id_usuario = (int)$data['id_usuario'];
 
-
-        if (!$id_tipo || !$id_query) {
+        if (!$id || !$nombre || !$id_usuario || $id_grafico ) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
         }
 
-        $id_tipo = mysqli_real_escape_string($cnx, $id_tipo);
-        $id_query = mysqli_real_escape_string($cnx, $id_query);
+        $id = mysqli_real_escape_string($cnx, $id);
+        $nombre = mysqli_real_escape_string($cnx, $nombre);
+        $id_grafico = mysqli_real_escape_string($cnx, $id_grafico);
+        $id_usuario = mysqli_real_escape_string($cnx, $id_usuario);
 
-        $verifica_sql = "SELECT id_grafico FROM graficos WHERE grafico = '$grafico' ";
+        $verifica_sql = "SELECT id_vista FROM vistas WHERE vista = '$vista' ";
         $verifica_res = mysqli_query($cnx, $verifica_sql);
 
         if (mysqli_num_rows($verifica_res) > 0) {
             http_response_code(409);
-            echo json_encode(['error' => 'Ya existe un grafico con ese query']);
+            echo json_encode(['error' => 'Ya existe un vista con ese query']);
             exit;
         }
 
-        $sql = "INSERT INTO graficos SET 
-                id_tipo = $id_tipo,
-                id_query = $id_query
+        $sql = "INSERT INTO vistas SET 
+                nombre = $nombre,
+                id_grafico = $id_grafico,
+                id_usuario = $id_usuario
                 ";
         $res = mysqli_query($cnx, $sql);
 
         if ($res) {
             http_response_code(201);
             echo json_encode([
-                'mensaje' => 'grafico creado correctamente',
+                'mensaje' => 'vista creado correctamente',
                 'id_insertado' => mysqli_insert_id($cnx)
             ]);
         } else {
             http_response_code(500);
             echo json_encode([
-                'error' => 'Error al insertar el grafico',
+                'error' => 'Error al insertar el vista',
                 'detalle' => mysqli_error($cnx)
             ]);
         }
@@ -64,7 +68,7 @@ try {
 } catch (Exception $e) {
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get graficos",
+        "message" => "Error en el get vistas",
         "error" => $e->getMessage()
     ]);
 }
