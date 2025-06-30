@@ -40,7 +40,7 @@ try {
         }
 
         $sql = "INSERT INTO vistas SET 
-                nombre = $nombre,
+                nombre = '$nombre',
                 id_grafico = $id_grafico,
                 id_usuario = $id_usuario
                 ";
