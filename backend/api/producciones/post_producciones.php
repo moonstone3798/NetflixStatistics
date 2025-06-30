@@ -47,7 +47,7 @@ try {
 
         if (mysqli_num_rows($verifica_res) > 0) {
             http_response_code(409); // Conflict
-            echo json_encode(['error' => 'Ya existe una producción con ese título']);
+            echo json_encode(['mensaje' => 'Ya existe una producción con ese título']);
             exit;
         }
 
@@ -72,7 +72,7 @@ try {
         } else {
             http_response_code(500);
             echo json_encode([
-                'error' => 'Error al insertar la producción',
+                'mensaje' => 'Error al insertar la producción',
                 'detalle' => mysqli_error($cnx)
             ]);
         }
