@@ -24,7 +24,7 @@ try {
             exit;
         }
 
-        $query = mysqli_real_escape_string($cnx, $query);
+        //$query = mysqli_real_escape_string($cnx, $query);
 
         $res = mysqli_query($cnx, $query);
 
