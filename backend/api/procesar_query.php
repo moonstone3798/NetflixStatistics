@@ -30,10 +30,21 @@ try {
         if ($res) {
             $labels = [];
             $values = [];
+            $title = null;
+
+            $field_info = mysqli_fetch_fields($res);
+            if (count($field_info) > 0) {
+                // Obtener el nombre del primer campo
+                $title = $field_info[0]->name;
+
+                // Si quieres "pluralizar" (muy básico, solo agrega 's' si no termina con 's')
+                /*if (substr($title, -1) !== 's') {
+                    $title .= 's';
+                }*/
+            }
 
             while ($fila = mysqli_fetch_assoc($res)) {
                 foreach ($fila as $clave => $valor) {
-                    // Asignar valores según tipo de dato: strings a labels, números a values
                     if (is_numeric($valor)) {
                         $values[] = $valor;
                     } else {
@@ -43,6 +54,7 @@ try {
             }
 
             echo json_encode([
+                "title" => $title,
                 "labels" => $labels,
                 "data" => $values
             ]);
