@@ -10,7 +10,7 @@ try {
         if (isset($_GET['id'])) {
             if (is_numeric($_GET['id'])){
                 $id = mysqli_real_escape_string($cnx, $_GET['id']);
-                $sql = "SELECT * FROM vistas WHERE id_vista = $id";
+                $sql = "SELECT * FROM vistas WHERE id_usuario = $id";
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'ID inválido']);
