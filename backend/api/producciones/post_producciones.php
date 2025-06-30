@@ -26,7 +26,7 @@ try {
         $id_datos_extras = isset($data['id_datos_extras']) ? trim($data['id_datos_extras']) : null;
         $id_tipo_produccion = isset($data['id_tipo_produccion']) ? trim($data['id_tipo_produccion']) : null;
 
-        if (!$tipo_produccion || !$titulo || !$fecha_ingreso || !$duracion || !$descripcion || !$id_idioma || !$id_datos_extras) {
+        if ( !$titulo || !$fecha_ingreso || !$duracion || !$descripcion || !$id_idioma || !$id_datos_extras || !$id_tipo_produccion) {
             http_response_code(400);
             echo json_encode(['error' => 'Faltan campos requeridos']);
             exit;
@@ -59,7 +59,7 @@ try {
                 , descripcion = '$descripcion'
                 , id_idioma = $id_idioma
                 , id_datos_extras = $id_datos_extras
-                , id_tipo = $id_tipo
+                , id_tipo = $id_tipo_produccion
                 ";
         $res = mysqli_query($cnx, $sql);
 
