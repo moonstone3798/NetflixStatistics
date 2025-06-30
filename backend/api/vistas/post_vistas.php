@@ -17,8 +17,8 @@ try {
         $data = json_decode($input, true);
 
         $nombre = isset($data['nombre']) ? trim($data['nombre']) : null;
-        $id_grafico = (int)$data['id_grafico'];
-        $id_usuario = (int)$data['id_usuario'];
+        $id_grafico = isset($data['id_grafico']) ? trim($data['id_grafico']) : null;
+        $id_usuario = isset($data['id_usuario']) ? trim($data['id_usuario']) : null;
 
         if ( !$nombre || !$id_usuario || $id_grafico ) {
             http_response_code(400);
@@ -27,8 +27,8 @@ try {
         }
 
         $nombre = mysqli_real_escape_string($cnx, $nombre);
-        $id_grafico = mysqli_real_escape_string($cnx, $id_grafico);
-        $id_usuario = mysqli_real_escape_string($cnx, $id_usuario);
+        $id_grafico = (int)$id_grafico;
+        $id_usuario = (int)$id_usuario;
 
         $verifica_sql = "SELECT id_vista FROM vistas WHERE nombre = '$nombre' ";
         $verifica_res = mysqli_query($cnx, $verifica_sql);
