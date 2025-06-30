@@ -1,7 +1,7 @@
 import api from "@/axios/axios.js";
-export const getProductions = async () => {
+export const getGraphicTypes = async () => {
   try {
-    const url = `/producciones/get_producciones.php`;
+    const url = `/tipos_graficos/get_tipos_graficos.php`;
     const response = await api.get(url);
     return { status: "success", data: response.data };
   } catch (error) {

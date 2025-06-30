@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/components/Generic/Modal/Modal.vue";
-import { deleteDirector } from "@/services/DirectorsService";
+import { deleteProduction } from "@/services/ProductionsService";
 import { useMessage } from "@/composables/useMessage";
 const { showAlert } = useMessage();
 const props = defineProps({
@@ -8,28 +8,29 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  director: { type: Object, default: null, required: false },
+  production: { type: Object, default: null, required: false },
 });
 
-const emit = defineEmits(["deleteDirector", "close"]);
+const emit = defineEmits(["deleteProduction", "close"]);
 
-const saveDeletedirector = async () => {
-  const response = await deleteDirector({ id: props.director.id_director });
+const saveDeleteProduction = async () => {
+  const response = await deleteProduction({
+    id: props.production.id_produccion,
+  });
   if (response.status === "success") {
     showAlert({
       title: "¡Éxito!",
-      text: "Director eliminado correctamente",
+      text: "Producción eliminada correctamente",
       icon: "success",
     });
     emit("close");
-    emit("deleteDirector", {
-      id_director: props.director.id_director,
-      nombre: props.director.nombre,
+    emit("deleteProduction", {
+      id_produccion: props.production.id_produccion,
     });
   } else {
     showAlert({
       title: "¡Error!",
-      text: "Error al eliminar al director",
+      text: "Error al eliminar la producción",
       icon: "error",
     });
     emit("close");
@@ -39,15 +40,15 @@ const saveDeletedirector = async () => {
 <template>
   <Modal
     v-if="showDeleteModal"
-    title="Eliminar director"
+    title="Eliminar producción"
     @close="emit('close')"
     buttonText="confirmar"
-    @submit="saveDeletedirector()"
+    @submit="saveDeleteProduction()"
   >
     <div class="mb-4">
       <p class="text-white">
-        ¿Estás seguro de que deseas eliminar este director
-        {{ props.director.nombre }}?
+        ¿Estás seguro de que deseas eliminar esta producción
+        {{ props.production.titulo }}?
       </p>
     </div>
   </Modal>

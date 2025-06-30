@@ -8,6 +8,8 @@ import LanguagesTable from "@/components/Main/Data/LanguagesTable.vue";
 import CountriesTable from "@/components/Main/Data/CountriesTable.vue";
 import CastsTable from "@/components/Main/Data/CastsTable.vue";
 import TypesOfProductionsTable from "@/components/Main/Data/TypesOfProductionsTable.vue";
+import NumericDatasTable from "../../../components/Main/Data/NumericDatasTable.vue";
+import ProductionsTable from "../../../components/Main/Data/ProductionsTable.vue";
 const router = useRouter();
 const sections = [
   {
@@ -36,9 +38,9 @@ const sections = [
   },
   {
     id: "Datos numéricos",
-    component: markRaw(TypesOfProductionsTable),
+    component: markRaw(NumericDatasTable),
   },
-  {},
+  { id: "Producciones", component: markRaw(ProductionsTable) },
 ];
 
 const sectionSelected = ref(null);

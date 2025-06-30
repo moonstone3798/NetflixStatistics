@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/components/Generic/Modal/Modal.vue";
-import { deleteDirector } from "@/services/DirectorsService";
+import { deleteProductionType } from "@/services/ProductionTypeService";
 import { useMessage } from "@/composables/useMessage";
 const { showAlert } = useMessage();
 const props = defineProps({
@@ -8,28 +8,30 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  director: { type: Object, default: null, required: false },
+  type: { type: Object, default: null, required: false },
 });
 
-const emit = defineEmits(["deleteDirector", "close"]);
+const emit = defineEmits(["deleteType", "close"]);
 
-const saveDeletedirector = async () => {
-  const response = await deleteDirector({ id: props.director.id_director });
+const saveDeleteType = async () => {
+  const response = await deleteProductionType({
+    id: props.type.id_tipo_produccion,
+  });
   if (response.status === "success") {
     showAlert({
       title: "¡Éxito!",
-      text: "Director eliminado correctamente",
+      text: "Tipo de producción eliminado correctamente",
       icon: "success",
     });
     emit("close");
-    emit("deleteDirector", {
-      id_director: props.director.id_director,
-      nombre: props.director.nombre,
+    emit("deleteType", {
+      id_tipo_produccion: props.type.id_tipo_produccion,
+      nombre: props.type.nombre,
     });
   } else {
     showAlert({
       title: "¡Error!",
-      text: "Error al eliminar al director",
+      text: "Error al eliminar el tipo de producción",
       icon: "error",
     });
     emit("close");
@@ -39,15 +41,15 @@ const saveDeletedirector = async () => {
 <template>
   <Modal
     v-if="showDeleteModal"
-    title="Eliminar director"
+    title="Eliminar tipo de producción"
     @close="emit('close')"
     buttonText="confirmar"
-    @submit="saveDeletedirector()"
+    @submit="saveDeleteType()"
   >
     <div class="mb-4">
       <p class="text-white">
-        ¿Estás seguro de que deseas eliminar este director
-        {{ props.director.nombre }}?
+        ¿Estás seguro de que deseas eliminar este tipo de producción
+        {{ props.type.nombre }}?
       </p>
     </div>
   </Modal>

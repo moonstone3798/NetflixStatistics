@@ -28,6 +28,7 @@ export default {
           gray50: "#BCBCBC",
           gray100: "#BDBCBB",
           gray200: "#E8D1D1",
+          darkGray: "#141414",
         },
       },
     },

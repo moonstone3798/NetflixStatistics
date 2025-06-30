@@ -88,7 +88,7 @@ const handleLogin = async () => {
     lastName: form.lastName,
     email: form.email,
     password: form.password,
-    isAdmin: form.isAdmin,
+    isAdmin: form.isAdmin === true ? 1 : 0,
   });
   if (response.status === "success") {
     if (response.data.status === "error") {
@@ -106,8 +106,17 @@ const handleLogin = async () => {
         },
       });
     } else {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          nombre: form.name,
+          apellido: form.lastName,
+          email: form.email,
+          password: form.password,
+          is_admin: form.isAdmin === true ? 1 : 0,
+        })
+      );
       router.push("/home");
-      localStorage.setItem("userInfo", JSON.stringify(response.data.data));
       Swal.fire({
         title: "¡Éxito!",
         text: response.data.message,
