@@ -23,6 +23,9 @@ try {
         }
 
         $id = (int)$data['id'];
+        $id_idioma = (int)$data['id_idioma'];
+        $id_datos_extras = (int)$data['id_datos_extras'];
+        $id_tipo_produccion = (int)$data['id_tipo_produccion'];
 
         $titulo = isset($data['titulo']) ? trim($data['titulo']) : null;
         $fecha_ingreso = isset($data['fecha_ingreso']) ? trim($data['fecha_ingreso']) : null;
@@ -56,7 +59,7 @@ try {
                 , descripcion = '$descripcion'
                 , id_idioma = $id_idioma
                 , id_datos_extras = $id_datos_extras
-                , id_tipo = $$id_tipo_produccion
+                , id_tipo = $id_tipo_produccion
                 WHERE id_produccion = $id";
 
         $res = mysqli_query($cnx, $sql);
