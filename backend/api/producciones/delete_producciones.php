@@ -22,7 +22,7 @@ try {
             exit;
         }
 
-        $sql = "DELETE FROM directores WHERE id_director = $id";
+        $sql = "DELETE FROM producciones WHERE id_produccion = $id";
         $res = mysqli_query($cnx, $sql);
 
         if ($res) {
