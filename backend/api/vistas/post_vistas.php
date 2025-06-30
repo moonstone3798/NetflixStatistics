@@ -30,7 +30,7 @@ try {
         $id_grafico = mysqli_real_escape_string($cnx, $id_grafico);
         $id_usuario = mysqli_real_escape_string($cnx, $id_usuario);
 
-        $verifica_sql = "SELECT id_vista FROM vistas WHERE vista = '$vista' ";
+        $verifica_sql = "SELECT id_vista FROM vistas WHERE nombre = '$nombre' ";
         $verifica_res = mysqli_query($cnx, $verifica_sql);
 
         if (mysqli_num_rows($verifica_res) > 0) {
@@ -66,7 +66,7 @@ try {
 } catch (Exception $e) {
     echo json_encode([
         "status" => "error",
-        "message" => "Error en el get vistas",
+        "message" => "Error en el post vistas",
         "error" => $e->getMessage()
     ]);
 }
