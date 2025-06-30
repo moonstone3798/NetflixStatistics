@@ -53,7 +53,7 @@ try {
     echo json_encode([
         "status" => "success",
          "message" => "Cuenta creada exitosamente!",
-         "id" => $id
+         "id_usuario" => $id
         ]);
 
 } catch (Exception $e) {
