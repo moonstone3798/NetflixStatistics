@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, onBeforeUnmount } from "vue";
 import NIcon from "../../../../public/Icon/NIcon.vue";
 import Avatar from "../../Generic/Avatar/Avatar.vue";
 import { useRouter } from "vue-router";
@@ -12,6 +12,20 @@ const props = defineProps({
 });
 const router = useRouter();
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+const handleClickOutside = (event) => {
+  if (
+    !buttonRef.value?.contains(event.target) &&
+    !dropdownRef.value?.contains(event.target)
+  ) {
+    showDropdown.value = false;
+  }
+};
+onMounted(() => document.addEventListener("mousedown", handleClickOutside));
+onBeforeUnmount(() =>
+  document.removeEventListener("mousedown", handleClickOutside)
+);
+const buttonRef = ref(null);
+const dropdownRef = ref(null);
 const showDropdown = ref(false);
 const handleShowModal = () => {
   showDropdown.value = !showDropdown.value;
@@ -43,8 +57,10 @@ const logout = () => {
           <router-link to="/aboutUs">Nosotros</router-link>
         </li>
       </ul>
-      <div class="relative flex justify-end">
-        <Avatar @click="handleShowModal" class="cursor-pointer" />
+      <div ref="dropdownRef" class="relative flex justify-end">
+        <div ref="buttonRef">
+          <Avatar @click="handleShowModal" class="cursor-pointer" />
+        </div>
         <div
           v-if="showDropdown"
           class="z-10 absolute top-full right-0 mt-3 bg-netflix-darkGray divide-y divide-netflix-gray rounded-lg shadow-sm w-44"

@@ -30,7 +30,6 @@ const UpdateCast = (cast) => {
   castSearch.nombre = cast.nombre;
 };
 const deleteCast = (cast) => {
-  console.log("Eliminando reparto", cast);
   casts.value = casts.value.filter((c) => c.id_reparto !== cast.id_reparto);
 };
 onMounted(async () => {

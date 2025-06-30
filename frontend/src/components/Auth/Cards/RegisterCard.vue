@@ -114,6 +114,7 @@ const handleLogin = async () => {
           email: form.email,
           password: form.password,
           is_admin: form.isAdmin === true ? 1 : 0,
+          id_usuario: response.data.id_usuario,
         })
       );
       router.push("/home");
